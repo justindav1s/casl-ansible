@@ -6,7 +6,7 @@
 # - 'aws'
 # - 'azure' (Coming Soon)
 # - 'gcp'
-
+hosting_infrastructure: azure
 
 # DNS configurations
 # the 'dns_domain' will be used as the base domain for the deployment and has
@@ -21,36 +21,23 @@ docker_version: "1.13.*"
 
 # master(s) root (/) volume size and device
 # - default values are "/dev/sda1" and "50"
-#master_root_volume: "/dev/sda1"
-#master_root_volume_size: 50
+master_root_volume: "/dev/sda2"
+master_root_volume_size: 30
 
 # infra node(s) root (/) volume size and device
 # - default values are "/dev/sda1" and "50"
-#infra_node_root_volume: "/dev/sda1"
-#infra_node_root_volume_size: 50
+infra_node_root_volume: "/dev/sda2"
+infra_node_root_volume_size: 30
 
 # app node(s) root (/) volume size and device
 # - default values are "/dev/sda1" and "50"
-#app_node_root_volume: "/dev/sda1"
-#app_node_root_volume_size: 50
-
-# cns node(s) root (/) volume size and device
-# - default values are "/dev/sda1" and "50"
-#cns_node_root_volume: "/dev/sda1"
-#cns_node_root_volume_size: 50
+app_node_root_volume: "/dev/sda2"
+app_node_root_volume_size: 30
 
 # Docker Storage configuration variables - for all nodes
 # - default values are "/dev/xvdb" and "40"
-#docker_storage_block_device: "/dev/xvdb"
-#docker_volume_size: "40"
-
-# CNS (GlusterFS) Storage configuration variables
-# - default values are "/dev/xvdg" and "200"
-#cns_node_glusterfs_volume: "/dev/xvdg"
-#cns_node_glusterfs_volume_size: "200"
-
-# use the "-e" option to set "aws_key_name"
-#aws_key_name: my-ssh-region-key
+docker_storage_block_device: "/dev/sdc"
+docker_volume_size: "50"
 
 # Tags and names used to identify the instances
 # Note: Be careful when changing these as the tools rely on some of these values
@@ -83,6 +70,7 @@ rhsm_repos:
   - "rhel-7-server-ose-3.9-rpms"
   - "rhel-7-server-extras-rpms"
   - "rhel-7-fast-datapath-rpms"
+  - "rhel-7-server-ansible-2.5-rpms"
 
 # Keep this to use Red Hat Satellite:
 rhsm_server_hostname: 'sat-6.example.com'
@@ -90,10 +78,10 @@ rhsm_org_id: 'CASL_ORG'
 rhsm_activationkey: 'casl-latest'
 
 # Uncomment the following to use RHSM username, password and optionally pool:
-#rhsm_username: ''
-#rhsm_password: ''
+rhsm_username: "{{ lookup('env','RHDN_USERNAME') }}"
+rhsm_password: "{{ lookup('env','RHDN_PASSWORD') }}"
 # leave commented out if you want to `--auto-attach` a pool
-#rhsm_pool: ''
+rhsm_pool: "{{ lookup('env','RHDN_POOL_ID') }}"
 
 # WARNING: By default the tools will update RPMs during provisioning. If any packages are
 # updated, the host(s) will reboot to ensure the correct versions are in use. This may 
@@ -112,8 +100,6 @@ rhsm_activationkey: 'casl-latest'
 
 
 #JD Vars
-
-hosting_infrastructure: azure
 
 env_id: "dev1"
 
