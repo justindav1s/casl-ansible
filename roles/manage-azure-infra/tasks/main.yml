@@ -42,10 +42,16 @@
     - azure_create_master_instances
     - operation == "deploy"
 
-#- import_tasks: deploy-cluster.yml
-#  when:
-#    - operation == "deploy"
-#
+- import_tasks: create-infra-instances.yml
+  when:
+    - azure_create_infra_instances
+    - operation == "deploy"
+
+- import_tasks: create-app-instances.yml
+  when:
+    - azure_create_app_instances
+    - operation == "deploy"
+
 #- import_tasks: update_dns.yml
 #  when:
 #    - operation == "deploy"
@@ -57,8 +63,3 @@
 - import_tasks: remove_infra.yml
   when:
     - operation == "absent"
-#
-#- import_tasks: remove_vpc.yml
-#  when:
-#    - operation == "absent"
-#    - delete_vpc

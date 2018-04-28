@@ -127,6 +127,8 @@ azure_configure_security_groups: true
 azure_create_loadbalancers: true
 azure_storage_account: true
 azure_create_master_instances: true
+azure_create_infra_instances: true
+azure_create_app_instances: true
 
 ocp_rg_name: "{{ env_id }}-ocp-rg"
 
