@@ -1,0 +1,79 @@
+- name: Create a master public ip address
+  azure_rm_publicipaddress:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ master_lb_public_ip_name }}"
+    allocation_method: Dynamic
+
+- name: Create Master load balancer
+  azure_rm_loadbalancer:
+    name: "{{ master_lb_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    frontend_ip_configurations:
+    - name: "master_frontend_ip"
+      public_ip_address: "{{ master_lb_public_ip_name }}"
+    backend_address_pools:
+    - name: "master_backend_address_pool"
+    probes:
+    - name: "console_probe"
+      protocol: Tcp
+      port: 8443
+      interval: 5
+      fail_count: 3
+    load_balancing_rules:
+    - name: "console_rule"
+      frontend_ip_configuration: "master_frontend_ip"
+      backend_address_pool: "master_backend_address_pool"
+      probe: "console_probe"
+      protocol: Tcp
+      load_distribution: Default
+      frontend_port: 443
+      backend_port: 8443
+      idle_timeout: 4
+
+- name: Create a infra public ip address
+  azure_rm_publicipaddress:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ infra_lb_public_ip_name }}"
+    allocation_method: Dynamic
+
+- name: Create Infra load balancer
+  azure_rm_loadbalancer:
+    name: "{{ infra_lb_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    frontend_ip_configurations:
+    - name: "infra_frontend_ip"
+      public_ip_address: "{{ infra_lb_public_ip_name }}"
+    backend_address_pools:
+    - name: "infra_backend_address_pool"
+    probes:
+    - name: "http_probe"
+      protocol: Tcp
+      port: 80
+      interval: 5
+      fail_count: 3
+    - name: "https_probe"
+      protocol: Tcp
+      port: 443
+      interval: 5
+      fail_count: 3
+    load_balancing_rules:
+    - name: "http_rule"
+      frontend_ip_configuration: "infra_frontend_ip"
+      backend_address_pool: "infra_backend_address_pool"
+      probe: "http_probe"
+      protocol: Tcp
+      load_distribution: Default
+      frontend_port: 80
+      backend_port: 80
+      idle_timeout: 4
+    - name: "https_rule"
+      frontend_ip_configuration: "infra_frontend_ip"
+      backend_address_pool: "infra_backend_address_pool"
+      probe: "https_probe"
+      protocol: Tcp
+      load_distribution: Default
+      frontend_port: 443
+      backend_port: 443
+      idle_timeout: 4

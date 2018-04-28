@@ -1,0 +1,183 @@
+---
+
+# 'hosting_infrastructure' is used to drive the correct behavior based
+# on the hosting infrastructure, cloud provider, etc. Valid values are:
+# - 'openstack'
+# - 'aws'
+# - 'azure' (Coming Soon)
+# - 'gcp'
+
+
+# DNS configurations
+# the 'dns_domain' will be used as the base domain for the deployment and has
+# to be a domain that is managed by Azure DNS within your Azure subscription
+# the 'dns_nameservers' is a list of DNS resolvers the cluster should use
+dns_domain: "digitaldevops.net"
+dns_nameservers:
+- 8.8.8.8
+
+# Specify the version of docker to use
+docker_version: "1.13.*"
+
+# master(s) root (/) volume size and device
+# - default values are "/dev/sda1" and "50"
+#master_root_volume: "/dev/sda1"
+#master_root_volume_size: 50
+
+# infra node(s) root (/) volume size and device
+# - default values are "/dev/sda1" and "50"
+#infra_node_root_volume: "/dev/sda1"
+#infra_node_root_volume_size: 50
+
+# app node(s) root (/) volume size and device
+# - default values are "/dev/sda1" and "50"
+#app_node_root_volume: "/dev/sda1"
+#app_node_root_volume_size: 50
+
+# cns node(s) root (/) volume size and device
+# - default values are "/dev/sda1" and "50"
+#cns_node_root_volume: "/dev/sda1"
+#cns_node_root_volume_size: 50
+
+# Docker Storage configuration variables - for all nodes
+# - default values are "/dev/xvdb" and "40"
+#docker_storage_block_device: "/dev/xvdb"
+#docker_volume_size: "40"
+
+# CNS (GlusterFS) Storage configuration variables
+# - default values are "/dev/xvdg" and "200"
+#cns_node_glusterfs_volume: "/dev/xvdg"
+#cns_node_glusterfs_volume_size: "200"
+
+# use the "-e" option to set "aws_key_name"
+#aws_key_name: my-ssh-region-key
+
+# Tags and names used to identify the instances
+# Note: Be careful when changing these as the tools rely on some of these values
+# to be set correctly.
+master_name: master
+etcd_name: etcd
+infra_node_name: infra-node
+app_node_name: app-node
+cns_node_name: cns
+
+group_masters_tag: masters_azure
+group_infra_nodes_tag: infra_nodes_azure
+group_app_nodes_tag: app_nodes_azure
+group_cns_nodes_tag: cns_nodes_azure
+
+labels_masters_tag: '{"region": "default"}'
+labels_infra_nodes_tag: '{"region": "infra"}'
+labels_app_nodes_tag: '{"region": "primary"}'
+labels_cns_nodes_tag: '{"region": "primary"}'
+
+
+# Should the cluster be configured for HA
+# - currently not supported
+ha_mode: false
+
+# Subscription Management Details
+rhsm_register: True
+rhsm_repos:
+  - "rhel-7-server-rpms"
+  - "rhel-7-server-ose-3.9-rpms"
+  - "rhel-7-server-extras-rpms"
+  - "rhel-7-fast-datapath-rpms"
+
+# Keep this to use Red Hat Satellite:
+rhsm_server_hostname: 'sat-6.example.com'
+rhsm_org_id: 'CASL_ORG'
+rhsm_activationkey: 'casl-latest'
+
+# Uncomment the following to use RHSM username, password and optionally pool:
+#rhsm_username: ''
+#rhsm_password: ''
+# leave commented out if you want to `--auto-attach` a pool
+#rhsm_pool: ''
+
+# WARNING: By default the tools will update RPMs during provisioning. If any packages are
+# updated, the host(s) will reboot to ensure the correct versions are in use. This may 
+# NOT be desirable during an consecutive runs to just apply minor changes. If you would 
+# like to avoid "surprise" reboots, make sure to uncomment the following variable. 
+# Do NOTE that a reboot should most likely happen on initial install, so it's important
+# that this variable is commented out or set to `True` for initial runs.
+#update_cluster_hosts: False
+
+# Uncomment the following `additional_list_of_packages_to_install` to list additional
+# packages/RPMs to install during install
+#additional_list_of_packages_to_install:
+#  - rpm-1
+#  - rpm-2
+
+
+
+#JD Vars
+
+hosting_infrastructure: azure
+
+env_id: "dev1"
+
+azure_zone: uksouth
+
+azure_create_rg: true
+azure_create_vnet: true
+azure_create_subnets: true
+azure_create_nics: true
+azure_configure_security_groups: true
+azure_create_loadbalancers: true
+azure_storage_account: true
+azure_create_master_instances: true
+
+ocp_rg_name: "{{ env_id }}-ocp-rg"
+
+ocp_vnet_name: "{{ env_id }}-ocp-vnet"
+ocp_vnet_cidr: 10.1.0.0/16
+
+image_offer: RHEL
+image_publisher: RedHat
+image_sku: '7.4'
+image_version: latest
+
+master_subnet_name: "{{ env_id }}-master-subnet"
+master_subnet_cidr: 10.1.2.0/24
+infra_subnet_name: "{{ env_id }}-infra-subnet"
+infra_subnet_cidr: 10.1.3.0/24
+app_subnet_name: "{{ env_id }}-app-subnet"
+app_subnet_cidr : 10.1.4.0/24
+
+master_networkinterface_name: "{{ env_id }}-master-nic"
+infra_networkinterface_name: "{{ env_id }}-infra-nic"
+app_networkinterface_name: "{{ env_id }}-app-nic"
+
+master_sec_group: "{{ master_networkinterface_name }}"
+infra_sec_group: "{{ infra_networkinterface_name }}"
+app_sec_group: "{{ app_networkinterface_name }}"
+
+master_lb_name: "{{ env_id }}-master-lb"
+master_lb_public_ip_name: "{{ env_id }}-master-lb-publicip"
+infra_lb_name: "{{ env_id }}-infra_lb"
+infra_lb_public_ip_name: "{{ env_id }}-infra-lb-publicip"
+
+admin_user: ocpadmin
+users_home: /root
+public_key: "{{ users_home }}/.ssh/id_rsa.pub"
+private_key: "{{ users_home }}/.ssh/id_rsa"
+ssh_publickey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbA6GrgNwS5+GjCpb0/CvMO99ph6xj4iAEEL9HQGPVub+H3ETeuAIB4wPMUESOIZZBk+C/KMCjVttzJX0kk5qvXtnsjvsj5cxz8xFcsh1HLvcEgOxb5IGICp04jKcCJMO0lYob/ZYbzkdz5FyWoi2tBNvDsVEvi9HWY2t6RVzMQYVNRi+RnU9Ez728nammthgefjv/MB4c1TgjT3Nk7e/vFtY9UAr0yZCavBmKwdMHQaZuvy3vnBOPwTBZP9AX/8mXfeQuFoqUJ7nC6ofpWkbcZcf0QejG8kvRA7MtSXj6XJ3O941VS+vtO+V+qvL4MX4MQxVKgVoGNRns0pXjBAgx jusdavis@jusdavis-OSX.local"
+
+master_vm_size: Standard_B2ms
+master_vm_name: "{{ env_id }}-ocp-master"
+master_docker_vol_size: 50
+num_masters: 2
+
+infra_vm_size: Standard_B2ms
+infra_vm_name: "{{ env_id }}-ocp-infra"
+infra_docker_vol_size: 50
+num_infras: 2
+
+app_vm_size: Standard_B2ms
+app_vm_name: "{{ env_id }}-ocp-app"
+app_docker_vol_size: 50
+num_apps: 2
+
+storage_account_name: ocpstacc
+storage_account_type: Standard_LRS

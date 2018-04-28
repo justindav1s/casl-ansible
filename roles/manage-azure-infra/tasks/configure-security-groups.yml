@@ -1,0 +1,142 @@
+- azure_rm_securitygroup:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ master_sec_group }}-{{ item }}"
+    purge_rules: yes
+    rules:
+      - name: 'AllowSSH'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 22
+        access: Allow
+        priority: 100
+        direction: Inbound
+      - name: 'AllowUdp8053'
+        protocol: Udp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 8053
+        access: Allow
+        priority: 101
+        direction: Inbound
+      - name: 'AllowTcp8053'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 8053
+        access: Allow
+        priority: 102
+        direction: Inbound
+      - name: 'AllowWebConsole'
+        protocol: Tcp
+        source_address_prefix: "*"
+        destination_port_range: 8443
+        access: Allow
+        priority: 103
+        direction: Inbound
+      - name: 'AllowWebConsole443'
+        protocol: Tcp
+        source_address_prefix: "*"
+        destination_port_range: 443
+        access: Allow
+        priority: 104
+        direction: Inbound
+      - name: 'AllowUdpDNS'
+        protocol: Udp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 53
+        access: Allow
+        priority: 105
+        direction: Inbound
+      - name: 'AllowTcpDNS'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 53
+        access: Allow
+        priority: 106
+        direction: Inbound
+      - name: 'AllowSDN'
+        protocol: Udp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 4789
+        access: Allow
+        priority: 107
+        direction: Inbound
+      - name: 'AllowKubelet'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 10250
+        access: Allow
+        priority: 108
+        direction: Inbound
+  with_sequence:
+    count="{{ num_masters }}"
+
+- azure_rm_securitygroup:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ infra_sec_group }}-{{ item }}"
+    purge_rules: yes
+    rules:
+      - name: 'AllowSSH'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 22
+        access: Allow
+        priority: 100
+        direction: Inbound
+      - name: 'AllowHTTP'
+        protocol: Tcp
+        source_address_prefix: "AzureLoadBalancer"
+        destination_port_range: 80
+        access: Allow
+        priority: 101
+        direction: Inbound
+      - name: 'AllowHTTPS'
+        protocol: Tcp
+        source_address_prefix: "AzureLoadBalancer"
+        destination_port_range: 443
+        access: Allow
+        priority: 102
+        direction: Inbound
+      - name: 'AllowSDN'
+        protocol: Udp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 4789
+        access: Allow
+        priority: 103
+        direction: Inbound
+      - name: 'AllowKubelet'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 10250
+        access: Allow
+        priority: 104
+        direction: Inbound
+  with_sequence:
+    count="{{ num_infras }}"
+
+- azure_rm_securitygroup:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ app_sec_group }}-{{ item }}"
+    purge_rules: yes
+    rules:
+      - name: 'AllowSSH'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 22
+        access: Allow
+        priority: 100
+        direction: Inbound
+      - name: 'AllowSDN'
+        protocol: Udp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 4789
+        access: Allow
+        priority: 101
+        direction: Inbound
+      - name: 'AllowKubelet'
+        protocol: Tcp
+        source_address_prefix: "VirtualNetwork"
+        destination_port_range: 10250
+        access: Allow
+        priority: 102
+        direction: Inbound
+  with_sequence:
+    count="{{ num_infras }}"

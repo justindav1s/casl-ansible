@@ -1,0 +1,20 @@
+- name: Create Master subnet
+  azure_rm_subnet:
+    name: "{{ master_subnet_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    resource_group: "{{ ocp_rg_name }}"
+    address_prefix_cidr: "{{ master_subnet_cidr }}"
+
+- name: Create Infra subnet
+  azure_rm_subnet:
+    name: "{{ infra_subnet_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    resource_group: "{{ ocp_rg_name }}"
+    address_prefix_cidr: "{{ infra_subnet_cidr }}"
+
+- name: Create App subnet
+  azure_rm_subnet:
+    name: "{{ app_subnet_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    resource_group: "{{ ocp_rg_name }}"
+    address_prefix_cidr: "{{ app_subnet_cidr }}"

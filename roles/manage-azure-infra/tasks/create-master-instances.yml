@@ -1,0 +1,33 @@
+- name: Create Master VM
+  azure_rm_virtualmachine:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ master_vm_name }}-{{ item }}"
+    vm_size: "{{ master_vm_size }}"
+    os_type: Linux
+    ssh_password_enabled: false
+    storage_account: "{{ storage_account_name }}"
+    managed_disk_type: "{{ storage_account_type }}"
+    admin_username: "{{ admin_user }}"
+    subnet_name: "{{ master_subnet_name }}"
+    ssh_public_keys:
+      - path: "/home/{{ admin_user }}/.ssh/authorized_keys"
+        key_data: "{{ ssh_publickey }}"
+    network_interface_names:
+    - "{{ master_networkinterface_name }}-{{ item }}"
+    data_disks:
+    - lun: 0
+      disk_size_gb: "{{ master_docker_vol_size }}"
+      storage_container_name: "{{ master_vm_name }}-{{ item }}-docker-vol"
+      managed_disk_type: "{{ storage_account_type }}"
+      storage_account_name: "{{ storage_account_name }}"
+    image:
+      offer: "{{ image_offer }}"
+      publisher: "{{ image_publisher }}"
+      sku: "{{ image_sku }}"
+      version: "{{ image_version }}"
+    tags:
+      master: "true"
+      type: "master"
+      name: "{{ master_vm_name }}-{{ item }}"
+  with_sequence:
+    count="{{ num_masters }}"

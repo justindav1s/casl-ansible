@@ -1,0 +1,64 @@
+---
+
+- import_tasks: pre-reqs.yml
+
+- import_tasks: create-resource-group.yml
+  when:
+    - azure_create_rg
+    - operation == "deploy"
+
+- import_tasks: create-vnet.yml
+  when:
+    - azure_create_vnet
+    - operation == "deploy"
+
+- import_tasks: create-subnets.yml
+  when:
+    - azure_create_subnets
+    - operation == "deploy"
+
+- import_tasks: configure-security-groups.yml
+  when:
+    - azure_configure_security_groups
+    - operation == "deploy"
+
+- import_tasks: create-nics.yml
+  when:
+    - azure_create_nics
+    - operation == "deploy"
+
+- import_tasks: create-loadbalancers.yml
+  when:
+    - azure_create_loadbalancers
+    - operation == "deploy"
+
+- import_tasks: create-storage-account.yml
+  when:
+    - azure_storage_account
+    - operation == "deploy"
+
+- import_tasks: create-master-instances.yml
+  when:
+    - azure_create_master_instances
+    - operation == "deploy"
+
+#- import_tasks: deploy-cluster.yml
+#  when:
+#    - operation == "deploy"
+#
+#- import_tasks: update_dns.yml
+#  when:
+#    - operation == "deploy"
+#
+#- import_tasks: start_stop_instances.yml
+#  when: (operation == "running") or
+#        (operation == "stopped")
+#
+- import_tasks: remove_infra.yml
+  when:
+    - operation == "absent"
+#
+#- import_tasks: remove_vpc.yml
+#  when:
+#    - operation == "absent"
+#    - delete_vpc

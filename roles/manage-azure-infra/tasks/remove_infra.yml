@@ -1,0 +1,144 @@
+- name: remove master vms and all storage
+  azure_rm_virtualmachine:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ master_vm_name }}{{ item }}"
+    state: absent
+    remove_on_absent:
+      - virtual_storage
+  with_sequence:
+    count="{{ num_masters }}"
+
+- name: remove infra vms and all storage
+  azure_rm_virtualmachine:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ infra_vm_name }}{{ item }}"
+    state: absent
+    remove_on_absent:
+      - virtual_storage
+  with_sequence:
+    count="{{ num_infras }}"
+
+- name: remove infra vms and all storage
+  azure_rm_virtualmachine:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ app_vm_name }}{{ item }}"
+    state: absent
+    remove_on_absent:
+      - virtual_storage
+  with_sequence:
+    count="{{ num_apps }}"
+
+- name: delete a storage account
+  azure_rm_storageaccount:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ storage_account_name }}"
+    state: absent
+
+- name: delete Master load balancer
+  azure_rm_loadbalancer:
+    name: "{{ master_lb_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    state: absent
+
+- name: delete infra load balancer
+  azure_rm_loadbalancer:
+    name: "{{ infra_lb_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    state: absent
+
+- name: delete a master public ip address
+  azure_rm_publicipaddress:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ master_lb_public_ip_name }}"
+    allocation_method: Dynamic
+    state: absent
+
+- name: delete a infra public ip address
+  azure_rm_publicipaddress:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ infra_lb_public_ip_name }}"
+    allocation_method: Dynamic
+    state: absent
+
+- name: delete network interfaces for Infra nodes
+  azure_rm_networkinterface:
+    name: "{{ infra_networkinterface_name }}-{{ item }}"
+    resource_group: "{{ ocp_rg_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    subnet_name: "{{ infra_subnet_name }}"
+    security_group_name: "{{ infra_networkinterface_name }}_sg"
+    state: absent
+  with_sequence:
+    count="{{ num_infras }}"
+
+- name: delete network interfaces for Master nodes
+  azure_rm_networkinterface:
+    name: "{{ master_networkinterface_name }}-{{ item }}"
+    resource_group: "{{ ocp_rg_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    subnet_name: "{{ master_subnet_name }}"
+    security_group_name: "{{ master_networkinterface_name }}_sg"
+    state: absent
+  with_sequence:
+    count="{{ num_masters }}"
+
+- name: delete network interfaces for App nodes
+  azure_rm_networkinterface:
+    name: "{{ app_networkinterface_name }}-{{ item }}"
+    resource_group: "{{ ocp_rg_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    subnet_name: "{{ app_subnet_name }}"
+    security_group_name: "{{ app_networkinterface_name }}_sg"
+    state: absent
+  with_sequence:
+    count="{{ num_apps }}"
+
+- name: delete master sec group
+  azure_rm_securitygroup:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ master_sec_group }}-{{ item }}"
+    state: absent
+  with_sequence:
+    count="{{ num_masters }}"
+
+- name: delete infra sec group
+  azure_rm_securitygroup:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ infra_sec_group }}-{{ item }}"
+    state: absent
+  with_sequence:
+    count="{{ num_infras }}"
+
+- name: delete app sec group
+  azure_rm_securitygroup:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ app_sec_group }}-{{ item }}"
+    state: absent
+  with_sequence:
+    count="{{ num_apps }}"
+
+- name: delete Master subnet
+  azure_rm_subnet:
+    name: "{{ master_subnet_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    resource_group: "{{ ocp_rg_name }}"
+    address_prefix_cidr: "{{ master_subnet_cidr }}"
+    state: absent
+
+- name: delete Infra subnet
+  azure_rm_subnet:
+    name: "{{ infra_subnet_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    resource_group: "{{ ocp_rg_name }}"
+    address_prefix_cidr: "{{ infra_subnet_cidr }}"
+    state: absent
+
+- name: delete App subnet
+  azure_rm_subnet:
+    name: "{{ app_subnet_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    resource_group: "{{ ocp_rg_name }}"
+    address_prefix_cidr: "{{ app_subnet_cidr }}"
+    state: absent

@@ -1,0 +1,166 @@
+---
+- name: Fail when delete_vpc is not defined
+  debug:
+    msg: "delete_vpc boolean variable must be specified to remove the Cluster"
+  failed_when:
+    - delete_vpc is not defined
+    - operation == "absent"
+
+- name: Fail when ~/.azure/credentials does not exist
+  stat:
+    path: ~/.azure/credentials
+  register: azure_credentials
+
+- debug:
+    msg: "~/.azure/credentials does not exist"
+  failed_when: azure_credentials.stat.exists == False
+
+- name: Set Default values
+  set_fact:
+    master_root_volume: "{{ master_root_volume | default(default_root_volume) }}"
+    master_root_volume_size: "{{ master_root_volume_size | default(default_root_volume_size) }}"
+    infra_node_root_volume: "{{ infra_node_root_volume | default(default_root_volume) }}"
+    infra_node_root_volume_size: "{{ infra_node_root_volume_size | default(default_root_volume_size) }}"
+    app_node_root_volume: "{{ app_node_root_volume | default(default_root_volume) }}"
+    app_node_root_volume_size: "{{ app_node_root_volume_size | default(default_root_volume_size) }}"
+    cns_node_root_volume: "{{ cns_node_root_volume | default(default_root_volume) }}"
+    cns_node_root_volume_size: "{{ cns_node_root_volume_size | default(default_root_volume_size) }}"
+    cns_node_glusterfs_volume: "{{ cns_node_glusterfs_volume | default(default_cns_volume) }}" 
+    cns_node_glusterfs_volume_size: "{{ cns_node_glusterfs_volume_size | default(default_cns_volume_size) }}" 
+    docker_storage_block_device: "{{ docker_storage_block_device | default(default_docker_volume) }}"
+    docker_storage_volume_size: "{{ docker_storage_volume_size | default(default_docker_volume_size) }}"
+ 
+
+################################################################################
+# Master Facts
+
+- name: "Prepare facts to Create Master(s)"
+  set_fact:
+    az_name: "{{ env_id }}-ocp-{{ master_name }}"
+
+    az_image_offer: "{{ image_offer }}"
+    az_image_publisher: "{{ image_publisher }}"
+    az_image_sku: "{{ image_sku }}"
+    az_image_version: "{{ image_version }}"
+
+    az_instance_type: "{{ master_flavor | default('Standard_B2ms') }}"
+    az_group: "{{ azure_master_sgroups | default(['ocp-ssh', 'ocp-master', 'ocp-app-node']) }}"
+    az_instance_tags:
+      group: "{{ group_masters_tag }}"
+      node_labels: "{{ labels_masters_tag }}"
+      env_id: "{{ env_id }}"
+    az_volumes:
+      - device_name: "{{ master_root_volume }}"
+        volume_size: "{{ master_root_volume_size }}"
+        volume_type: gp2
+      - device_name: "{{ docker_storage_block_device }}"
+        volume_size: "{{ docker_storage_volume_size }}"
+        volume_type: gp2
+    az_num_instances: "{{ num_masters }}"
+    az_sg:
+      - name: "ocp-ssh"
+        description: "OCP SSH"
+        rules: "{{ ocp_ssh_sg_rules|default([]) + default_ocp_ssh_sg_rules }}"
+      - name: "ocp-master"
+        description: "OCP Master"
+        rules: "{{ ocp_master_sg_rules|default([]) + default_ocp_master_sg_rules }}"
+      - name: "ocp-app-node"
+        description: "OCP App Node"
+        rules: "{{ ocp_app_node_sg_rules|default([]) + default_ocp_app_node_sg_rules }}"
+
+#- name: "Store away the instance information"
+#  set_fact:
+#    master_instances: "{{ az_instances }}"
+
+- name: "Clear facts"
+  set_fact:
+    az_instances: ''
+
+
+################################################################################
+# Infra Node Facts
+
+- name: "Prepare facts to Create Infra Node(s)"
+  set_fact:
+    az_name: "{{ env_id }}-ocp-{{ infra_node_name }}"
+
+    az_image_offer: "{{ image_offer }}"
+    az_image_publisher: "{{ image_publisher }}"
+    az_image_sku: "{{ image_sku }}"
+    az_image_version: "{{ image_version }}"
+
+    az_instance_type: "{{ infra_flavor | default('Standard_B2ms') }}"
+    az_group: "{{ aws_infra_node_sgroups | default(['ocp-ssh', 'ocp-infra-node', 'ocp-app-node']) }}"
+    az_instance_tags:
+      group: "{{ group_infra_nodes_tag }}"
+      node_labels: "{{ labels_infra_nodes_tag }}"
+      env_id: "{{ env_id }}"
+    az_volumes:
+      - device_name: "{{ infra_node_root_volume }}"
+        volume_size: "{{ infra_node_root_volume_size }}"
+        volume_type: gp2
+      - device_name: "{{ docker_storage_block_device }}"
+        volume_size: "{{ docker_storage_volume_size }}"
+        volume_type: gp2
+    az_num_instances: "{{ num_infras }}"
+    az_sg:
+      - name: "ocp-ssh"
+        description: "OCP SSH"
+        rules: "{{ ocp_ssh_sg_rules|default([]) + default_ocp_ssh_sg_rules }}"
+      - name: "ocp-app-node"
+        description: "OCP App Node"
+        rules: "{{ ocp_app_node_sg_rules|default([]) + default_ocp_app_node_sg_rules }}"
+      - name: "ocp-infra-node"
+        description: "OCP Infra Node"
+        rules: "{{ ocp_infra_node_sg_rules|default([]) + default_ocp_infra_node_sg_rules }}"
+
+#- name: "Store away the instance information"
+#  set_fact:
+#    infra_node_instances: "{{ az_instances }}"
+
+- name: "Clear facts"
+  set_fact:
+    az_instances: ''
+
+
+################################################################################
+# App Nodes Facts
+
+- name: "Prepare facts to Create App Node(s)"
+  set_fact:
+    az_name: "{{ env_id }}-ocp-{{ app_node_name }}"
+
+    az_image_offer: "{{ image_offer }}"
+    az_image_publisher: "{{ image_publisher }}"
+    az_image_sku: "{{ image_sku }}"
+    az_image_version: "{{ image_version }}"
+
+    az_instance_type: "{{ app_node_flavor | default('Standard_B2ms') }}"
+    az_group: "{{ aws_app_node_sgroups | default(['ocp-ssh', 'ocp-app-node']) }}"
+    az_instance_tags:
+      group: "{{ group_app_nodes_tag }}"
+      node_labels: "{{ labels_app_nodes_tag }}"
+      env_id: "{{ env_id }}"
+    az_volumes:
+      - device_name: "{{ app_node_root_volume }}"
+        volume_size: "{{ app_node_root_volume_size }}"
+        volume_type: gp2
+      - device_name: "{{ docker_storage_block_device }}"
+        volume_size: "{{ docker_storage_volume_size }}"
+        volume_type: gp2
+    az_num_instances: "{{ num_apps }}"
+    az_sg:
+      - name: "ocp-ssh"
+        description: "OCP SSH"
+        rules: "{{ ocp_ssh_sg_rules|default([]) + default_ocp_ssh_sg_rules }}"
+      - name: "ocp-app-node"
+        description: "OCP App Node"
+        rules: "{{ ocp_app_node_sg_rules|default([]) + default_ocp_app_node_sg_rules }}"
+
+#- name: "Store away the instance information"
+#  set_fact:
+#    app_node_instaces: "{{ az_instances }}"
+
+- name: "Clear facts"
+  set_fact:
+    az_instances: ''

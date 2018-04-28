@@ -1,0 +1,6 @@
+- name: Create a virtual network
+  azure_rm_virtualnetwork:
+    name: "{{ ocp_vnet_name }}"
+    resource_group: "{{ ocp_rg_name }}"
+    address_prefixes_cidr:
+        - "{{ ocp_vnet_cidr }}"

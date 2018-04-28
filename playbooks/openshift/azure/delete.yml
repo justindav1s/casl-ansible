@@ -1,0 +1,4 @@
+---
+- hosts: localhost
+  roles:
+    - role: delete_resource_group

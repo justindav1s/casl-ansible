@@ -1,0 +1,42 @@
+- name: Create network interfaces for Infra nodes
+  azure_rm_networkinterface:
+    name: "{{ infra_networkinterface_name }}-{{ item }}"
+    resource_group: "{{ ocp_rg_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    subnet_name: "{{ infra_subnet_name }}"
+    security_group_name: "{{ infra_sec_group }}"
+    security_group: "{{ infra_sec_group }}"
+    ip_configurations:
+    - name: "infra_ipconfig"
+      private_ip_allocation_method: Dynamic
+      primary: True
+  with_sequence:
+    count="{{ num_infras }}"
+
+- name: Create network interfaces for Master nodes
+  azure_rm_networkinterface:
+    name: "{{ master_networkinterface_name }}-{{ item }}"
+    resource_group: "{{ ocp_rg_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    subnet_name: "{{ master_subnet_name }}"
+    ip_configurations:
+    - name: "master_ipconfig"
+      private_ip_allocation_method: Dynamic
+      primary: True
+  with_sequence:
+    count="{{ num_masters }}"
+
+- name: Create network interfaces for App nodes
+  azure_rm_networkinterface:
+    name: "{{ app_networkinterface_name }}-{{ item }}"
+    resource_group: "{{ ocp_rg_name }}"
+    virtual_network_name: "{{ ocp_vnet_name }}"
+    subnet_name: "{{ app_subnet_name }}"
+    ip_configurations:
+    - name: "app_ipconfig"
+      private_ip_allocation_method: Dynamic
+      primary: True
+  with_sequence:
+    count="{{ num_apps }}"
+
+

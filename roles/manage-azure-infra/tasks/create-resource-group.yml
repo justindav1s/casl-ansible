@@ -1,0 +1,4 @@
+- name: Create a resource group
+  azure_rm_resourcegroup:
+    name: "{{ ocp_rg_name }}"
+    location: "{{ azure_zone }}"
