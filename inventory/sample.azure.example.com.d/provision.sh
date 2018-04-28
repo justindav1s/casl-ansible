@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rm -rf ~/github/casl-ansible/playbooks/openshift/*.retry
+rm -rf ~/casl-ansible/playbooks/openshift/*.retry
 
 ansible-playbook -vvvv \
     -i inventory \
