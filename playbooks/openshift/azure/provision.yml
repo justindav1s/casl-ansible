@@ -19,7 +19,7 @@
   gather_facts: false
   tasks:
     - set_fact:
-        ansible_host: "{{ hostvars[inventory_hostname][name] }}"
+        ansible_host: hostvars[inventory_hostname][name]
     - name: Debug hostvar
       debug:
         msg: "{{ hostvars[inventory_hostname] }}"
