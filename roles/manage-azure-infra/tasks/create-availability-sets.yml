@@ -3,8 +3,8 @@
     name: "{{ master_availabilityset_name }}"
     location: "{{ azure_zone }}"
     resource_group: "{{ ocp_rg_name }}"
-    platform_update_domain_count: 5
-    platform_fault_domain_count: 3
+    platform_update_domain_count: 1
+    platform_fault_domain_count: 1
     sku: Aligned
 
 - name: Create an availability set for infra nodes
@@ -12,8 +12,8 @@
     name: "{{ infra_availabilityset_name }}"
     location: "{{ azure_zone }}"
     resource_group: "{{ ocp_rg_name }}"
-    platform_update_domain_count: 5
-    platform_fault_domain_count: 3
+    platform_update_domain_count: 1
+    platform_fault_domain_count: 1
     sku: Aligned
 
 - name: Create an availability set for app nodes
@@ -21,8 +21,8 @@
     name: "{{ app_availabilityset_name }}"
     location: "{{ azure_zone }}"
     resource_group: "{{ ocp_rg_name }}"
-    platform_update_domain_count: 5
-    platform_fault_domain_count: 3
+    platform_update_domain_count: 1
+    platform_fault_domain_count: 1
     sku: Aligned
 
 
