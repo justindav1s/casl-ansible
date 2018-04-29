@@ -1,4 +1,4 @@
-- name: remove master vms and all storage
+- name: remove master scaleset and all storage
   azure_rm_virtualmachine_scaleset:
     resource_group: "{{ ocp_rg_name }}"
     name: "{{ master_vm_name }}-scaleset"
@@ -6,7 +6,7 @@
     remove_on_absent:
       - virtual_storage
 
-- name: remove infra vms and all storage
+- name: remove infra scaleset and all storage
   azure_rm_virtualmachine_scaleset:
     resource_group: "{{ ocp_rg_name }}"
     name: "{{ infra_vm_name }}-scaleset"
@@ -14,12 +14,10 @@
     remove_on_absent:
       - virtual_storage
 
-- name: remove app vms and all storage
+- name: remove app scaleset and all storage
   azure_rm_virtualmachine_scaleset:
     resource_group: "{{ ocp_rg_name }}"
     name: "{{ app_vm_name }}-scaleset"
     state: absent
     remove_on_absent:
       - virtual_storage
-  with_sequence:
-    count="{{ num_apps }}"
