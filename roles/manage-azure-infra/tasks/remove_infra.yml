@@ -18,7 +18,7 @@
   with_sequence:
     count="{{ num_infras }}"
 
-- name: remove infra vms and all storage
+- name: remove app vms and all storage
   azure_rm_virtualmachine:
     resource_group: "{{ ocp_rg_name }}"
     name: "{{ app_vm_name }}-{{ item }}"
