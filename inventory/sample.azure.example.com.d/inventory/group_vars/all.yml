@@ -16,8 +16,8 @@ hosting_infrastructure: azure
 # to be a domain that is managed by Azure DNS within your Azure subscription
 # the 'dns_nameservers' is a list of DNS resolvers the cluster should use
 dns_domain: "digitaldevops.net"
-dns_nameservers:
-- 8.8.8.8
+#dns_nameservers:
+#- 8.8.8.8
 
 # Specify the version of docker to use
 docker_version: "1.13.*"
