@@ -37,17 +37,17 @@
     - azure_storage_account
     - operation == "deploy"
 
-- import_tasks: create-master-instances.yml
+- import_tasks: create-master-scaleset.yml
   when:
     - azure_create_master_instances
     - operation == "deploy"
 
-- import_tasks: create-infra-instances.yml
+- import_tasks: create-infra-scaleset.yml
   when:
     - azure_create_infra_instances
     - operation == "deploy"
 
-- import_tasks: create-app-instances.yml
+- import_tasks: create-app-scaleset.yml
   when:
     - azure_create_app_instances
     - operation == "deploy"

@@ -1,0 +1,35 @@
+- name: Create Master VM scaleset
+  azure_rm_virtualmachine_scaleset:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ master_vm_name }}-scaleset"
+    vm_size: "{{ master_vm_size }}"
+    capacity: "{{ num_masters }}"
+    os_type: Linux
+    ssh_password_enabled: false
+    storage_account: "{{ storage_account_name }}"
+    managed_disk_type: "{{ storage_account_type }}"
+    admin_username: "{{ admin_user }}"
+    subnet_name: "{{ master_subnet_name }}"
+    ssh_public_keys:
+      - path: "/home/{{ admin_user }}/.ssh/authorized_keys"
+        key_data: "{{ ssh_publickey }}"
+    network_interface_names:
+    - "{{ master_networkinterface_name }}"
+    data_disks:
+    - lun: 0
+      disk_size_gb: "{{ master_docker_vol_size }}"
+      storage_container_name: "{{ master_vm_name }}-docker-vol"
+      managed_disk_type: "{{ storage_account_type }}"
+      storage_account_name: "{{ storage_account_name }}"
+    image:
+      offer: "{{ image_offer }}"
+      publisher: "{{ image_publisher }}"
+      sku: "{{ image_sku }}"
+      version: "{{ image_version }}"
+    tags:
+      master: "true"
+      type: "master"
+      name: "{{ master_vm_name }}"
+      group: "{{ group_masters_tag }}"
+      node_labels: "{{ labels_masters_tag }}"
+      env_id: "{{ env_id }}"
