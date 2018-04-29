@@ -13,10 +13,7 @@
       var: result.stdout
 
   - debug:
-      var: ternary(hostvars[inventory_hostname]['ansible_hostname'])
+      var: hostvars[inventory_hostname]['ansible_hostname']
 
   - debug:
-      msg: "{{ ternary(hostvars[inventory_hostname]['ansible_host'] }}"
-
-  - debug:
-      msg: "{{ hostvars[inventory_hostname]['ansible_ssh_host'] }}"
+      var: ternary(hostvars[inventory_hostname]['ansible_host'], hostvars[inventory_hostname]['ansible_ssh_host'])
