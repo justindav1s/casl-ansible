@@ -1,0 +1,13 @@
+---
+- hosts: cluster_hosts
+  remote_user: "{{ admin_user }}"
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+  - name: Uname
+    command: "uname -a"
+    register: result
+
+  - debug:
+      var: result.stdout
