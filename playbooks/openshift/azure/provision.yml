@@ -14,17 +14,17 @@
   tasks:
     - meta: refresh_inventory
 
-- name: Run galaxy/infra-ansible/roles/update-host
-  hosts: cluster_hosts
-  gather_facts: false
-  tasks:
-    - name: Debug hostvar
-      debug:
-        msg: "{{ hostvars[inventory_hostname] }}"
-        verbosity: 2
-    - import_role:
-        name: ../../../galaxy/infra-ansible/roles/update-host
-        tasks_from: wait-for-host
+#- name: Run galaxy/infra-ansible/roles/update-host
+#  hosts: cluster_hosts
+#  gather_facts: false
+#  tasks:
+#    - name: Debug hostvar
+#      debug:
+#        msg: "{{ hostvars[inventory_hostname] }}"
+#        verbosity: 1
+#    - import_role:
+#        name: ../../../galaxy/infra-ansible/roles/update-host
+#        tasks_from: wait-for-host
 
 #- hosts: cluster_hosts
 #  tasks:
