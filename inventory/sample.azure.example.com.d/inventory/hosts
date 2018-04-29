@@ -21,22 +21,22 @@ etcd
 # Host Groups
 
 [masters:children]
-tag_group_masters_azure
+group_masters_azure
 
 [etcd:children]
-tag_group_masters_azure
+group_masters_azure
 
 [nodes:children]
 masters
-tag_group_infra_nodes_azure
-tag_group_app_nodes_azure
+group_infra_nodes_azure
+group_app_nodes_azure
 
 [infra_hosts:children]
-tag_group_infra_nodes_azure
+group_infra_nodes_azure
 
 [glusterfs]
 
-[tag_group_masters_azure]
-[tag_group_etcd_azure]
-[tag_group_infra_nodes_azure]
-[tag_group_app_nodes_azure]
+[group_masters_azure]
+[group_etcd_azure]
+[group_infra_nodes_azure]
+[group_app_nodes_azure]
