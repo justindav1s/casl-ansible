@@ -2,8 +2,9 @@
 
 rm -rf ~/casl-ansible/playbooks/openshift/*.retry
 
-ansible-playbook -vvvv \
+ansible-playbook -v \
     -i inventory \
     ../../playbooks/openshift/end-to-end.yml \
     -e@./inventory/group_vars/all.yml \
+    -e@./inventory/group_vars/OSEv3.yml \
     --extra-vars "operation=deploy"
