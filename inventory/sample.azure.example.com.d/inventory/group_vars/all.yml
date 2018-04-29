@@ -160,12 +160,12 @@ num_masters: 2
 infra_vm_size: Standard_B2ms
 infra_vm_name: "{{ env_id }}-ocp-infra"
 infra_docker_vol_size: 50
-num_infras: 2
+num_infras: 1
 
 app_vm_size: Standard_B2ms
 app_vm_name: "{{ env_id }}-ocp-app"
 app_docker_vol_size: 50
-num_apps: 2
+num_apps: 1
 
 storage_account_name: ocpstacc
 storage_account_type: Standard_LRS
