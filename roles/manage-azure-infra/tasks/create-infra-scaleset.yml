@@ -11,6 +11,7 @@
     admin_username: "{{ admin_user }}"
     virtual_network_name: "{{ ocp_vnet_name }}"
     subnet_name: "{{ infra_subnet_name }}"
+    upgrade_policy: Manual
     ssh_public_keys:
       - path: "/home/{{ admin_user }}/.ssh/authorized_keys"
         key_data: "{{ ssh_publickey }}"
