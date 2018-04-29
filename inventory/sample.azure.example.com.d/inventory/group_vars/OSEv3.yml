@@ -1,7 +1,7 @@
 ---
 
 # The username Ansible should use to access the instances with
-ansible_user: ec2-user
+ansible_user: ocpadmin
 
 # Should Ansible use "become" to gain elevated privileges (i.e.: root)
 ansible_become: true
