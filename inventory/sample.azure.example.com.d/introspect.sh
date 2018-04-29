@@ -2,7 +2,7 @@
 
 rm -rf ~/casl-ansible/playbooks/openshift/*.retry
 
-ansible-playbook -vvvv \
+ansible-playbook \
     -i inventory \
     ./introspect.yml \
     -e@./inventory/group_vars/all.yml

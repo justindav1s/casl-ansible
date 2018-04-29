@@ -11,3 +11,12 @@
 
   - debug:
       var: result.stdout
+
+  - debug:
+      var: "{{ hostvars[inventory_hostname]['ansible_host'] }}"
+
+  - debug:
+      var: "{{ ternary(hostvars[inventory_hostname]['ansible_host'] }}"
+
+  - debug:
+      var: "{{ hostvars[inventory_hostname]['ansible_ssh_host'] }}"
