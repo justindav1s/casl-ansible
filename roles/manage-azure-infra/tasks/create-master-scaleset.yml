@@ -6,15 +6,13 @@
     capacity: "{{ num_masters }}"
     os_type: Linux
     ssh_password_enabled: false
-    storage_account: "{{ storage_account_name }}"
+    load_balancer: "{{ master_lb_name }}"
     managed_disk_type: "{{ storage_account_type }}"
     admin_username: "{{ admin_user }}"
     subnet_name: "{{ master_subnet_name }}"
     ssh_public_keys:
       - path: "/home/{{ admin_user }}/.ssh/authorized_keys"
         key_data: "{{ ssh_publickey }}"
-    network_interface_names:
-    - "{{ master_networkinterface_name }}"
     data_disks:
     - lun: 0
       disk_size_gb: "{{ master_docker_vol_size }}"
