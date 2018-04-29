@@ -40,7 +40,7 @@ openshift_master_cluster_method=native
 # Addresses for connecting to the OpenShift master nodes
 openshift_master_cluster_hostname=ocp.digitaldevops.net
 openshift_master_cluster_public_hostname="ocp.{{ dns_domain }}"
-openshift_master_cluster_public_vip=51.141.226.92
+openshift_master_cluster_public_vip=51.143.142.168
 
 # Enable HTPasswdPasswordIdentityProvider
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
