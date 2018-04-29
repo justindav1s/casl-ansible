@@ -17,9 +17,7 @@
     data_disks:
     - lun: 0
       disk_size_gb: "{{ master_docker_vol_size }}"
-      storage_container_name: "{{ master_vm_name }}-docker-vol"
       managed_disk_type: "{{ storage_account_type }}"
-      storage_account_name: "{{ storage_account_name }}"
     image:
       offer: "{{ image_offer }}"
       publisher: "{{ image_publisher }}"
