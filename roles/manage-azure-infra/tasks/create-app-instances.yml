@@ -9,6 +9,7 @@
     managed_disk_type: "{{ storage_account_type }}"
     admin_username: "{{ admin_user }}"
     subnet_name: "{{ app_subnet_name }}"
+    availability_set: "{{ app_availabilityset_name }}"
     ssh_public_keys:
       - path: "/home/{{ admin_user }}/.ssh/authorized_keys"
         key_data: "{{ ssh_publickey }}"

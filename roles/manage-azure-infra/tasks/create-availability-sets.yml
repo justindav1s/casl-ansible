@@ -1,0 +1,28 @@
+- name: Create an availability set for masters
+  azure_rm_availabilityset:
+    name: "{{ master_availabilityset_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    platform_update_domain_count: 5
+    platform_fault_domain_count: 3
+    sku: Aligned
+
+- name: Create an availability set for infra nodes
+  azure_rm_availabilityset:
+    name: "{{ infra_availabilityset_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    platform_update_domain_count: 5
+    platform_fault_domain_count: 3
+    sku: Aligned
+
+- name: Create an availability set for app nodes
+  azure_rm_availabilityset:
+    name: "{{ app_availabilityset_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    platform_update_domain_count: 5
+    platform_fault_domain_count: 3
+    sku: Aligned
+
+

@@ -111,6 +111,7 @@ azure_zone: uksouth
 azure_create_rg: true
 azure_create_vnet: true
 azure_create_subnets: true
+azure_create_availability_sets: true
 azure_create_nics: true
 azure_configure_security_groups: true
 azure_create_loadbalancers: true
@@ -128,6 +129,10 @@ image_offer: RHEL
 image_publisher: RedHat
 image_sku: '7.4'
 image_version: latest
+
+master_availabilityset_name: master_availabilityset
+infra_availabilityset_name: infra_availabilityset
+app_availabilityset_name: app_availabilityset
 
 master_subnet_name: "{{ env_id }}-master-subnet"
 master_subnet_cidr: 10.1.2.0/24

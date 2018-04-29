@@ -29,6 +29,6 @@
       infra: "true"
       type: "infra"
       name: "{{ infra_vm_name }}"
-      group: "{{ group_infras_tag }}"
+      group: "{{ group_infra_nodes_tag }}"
       node_labels: "{{ labels_infras_tag }}"
       env_id: "{{ env_id }}"

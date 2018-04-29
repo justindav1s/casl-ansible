@@ -17,6 +17,11 @@
     - azure_create_subnets
     - operation == "deploy"
 
+- import_tasks: create-availability-sets.yml
+  when:
+    - azure_create_availability_sets
+    - operation == "deploy"
+
 - import_tasks: configure-security-groups.yml
   when:
     - azure_configure_security_groups
@@ -37,17 +42,17 @@
     - azure_storage_account
     - operation == "deploy"
 
-- import_tasks: create-master-scaleset.yml
+- import_tasks: create-master-instances.yml
   when:
     - azure_create_master_instances
     - operation == "deploy"
 
-- import_tasks: create-infra-scaleset.yml
+- import_tasks: create-infra-instances.yml
   when:
     - azure_create_infra_instances
     - operation == "deploy"
 
-- import_tasks: create-app-scaleset.yml
+- import_tasks: create-app-instances.yml
   when:
     - azure_create_app_instances
     - operation == "deploy"

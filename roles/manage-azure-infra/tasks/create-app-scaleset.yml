@@ -28,6 +28,6 @@
       app: "true"
       type: "app"
       name: "{{ app_vm_name }}"
-      group: "{{ group_apps_tag }}"
+      group: "{{ group_app_nodes_tag }}"
       node_labels: "{{ labels_apps_tag }}"
       env_id: "{{ env_id }}"
