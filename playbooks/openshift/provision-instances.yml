@@ -3,15 +3,15 @@
 - import_playbook: azure/provision.yml
   when: hosting_infrastructure == "azure"
 
-# Provision Openstack Instances
-- import_playbook: openstack/provision.yml
-  when: hosting_infrastructure == "openstack"
-
-# Provision aws Instances
-- import_playbook: aws/provision.yml
-  when: hosting_infrastructure == "aws"
-
-# Provision gcp Instances
-- import_playbook: gcp/provision.yml
-  when: hosting_infrastructure == "gcp"
+## Provision Openstack Instances
+#- import_playbook: openstack/provision.yml
+#  when: hosting_infrastructure == "openstack"
+#
+## Provision aws Instances
+#- import_playbook: aws/provision.yml
+#  when: hosting_infrastructure == "aws"
+#
+## Provision gcp Instances
+#- import_playbook: gcp/provision.yml
+#  when: hosting_infrastructure == "gcp"
 
