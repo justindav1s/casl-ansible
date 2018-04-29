@@ -1,4 +1,7 @@
 ---
+# Provision gcp Instances
+- import_playbook: azure/provision.yml
+  when: hosting_infrastructure == "azure"
 
 # Provision Openstack Instances
 - import_playbook: openstack/provision.yml
