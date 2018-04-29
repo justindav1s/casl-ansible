@@ -26,6 +26,8 @@
         name: ../../../galaxy/infra-ansible/roles/update-host
         tasks_from: wait-for-host
 
+#  - set_fact:
+#       ansible_host: "{{ hostvars[inventory_hostname][name] }}"
 #- hosts: cluster_hosts
 #  tasks:
 #    - name: Set Openshift Hostnames

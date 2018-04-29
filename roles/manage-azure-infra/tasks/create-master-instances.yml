@@ -32,6 +32,7 @@
       name: "{{ master_vm_name }}-{{ item }}"
       group: "{{ group_masters_tag }}"
       node_labels: "{{ labels_masters_tag }}"
+      ansible_host: "{{ infra_vm_name }}-{{ item }}"
       env_id: "{{ env_id }}"
   with_sequence:
     count="{{ num_masters }}"
