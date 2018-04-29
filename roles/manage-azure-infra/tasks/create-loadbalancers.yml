@@ -13,7 +13,7 @@
     - name: "master_frontend_ip"
       public_ip_address: "{{ master_lb_public_ip_name }}"
     backend_address_pools:
-    - name: "master_backend_address_pool"
+    - name: "{{ master_availabilityset_name }}"
     probes:
     - name: "console_probe"
       protocol: Tcp
@@ -23,7 +23,7 @@
     load_balancing_rules:
     - name: "console_rule"
       frontend_ip_configuration: "master_frontend_ip"
-      backend_address_pool: "master_backend_address_pool"
+      backend_address_pool: "{{ master_availabilityset_name }}"
       probe: "console_probe"
       protocol: Tcp
       load_distribution: Default
@@ -46,7 +46,7 @@
     - name: "infra_frontend_ip"
       public_ip_address: "{{ infra_lb_public_ip_name }}"
     backend_address_pools:
-    - name: "infra_backend_address_pool"
+    - name: "{{ infra_availabilityset_name }}"
     probes:
     - name: "http_probe"
       protocol: Tcp
@@ -61,7 +61,7 @@
     load_balancing_rules:
     - name: "http_rule"
       frontend_ip_configuration: "infra_frontend_ip"
-      backend_address_pool: "infra_backend_address_pool"
+      backend_address_pool: "{{ infra_availabilityset_name }}"
       probe: "http_probe"
       protocol: Tcp
       load_distribution: Default
@@ -70,7 +70,7 @@
       idle_timeout: 4
     - name: "https_rule"
       frontend_ip_configuration: "infra_frontend_ip"
-      backend_address_pool: "infra_backend_address_pool"
+      backend_address_pool: "{{ infra_availabilityset_name }}"
       probe: "https_probe"
       protocol: Tcp
       load_distribution: Default
