@@ -17,6 +17,7 @@
     data_disks:
     - lun: 0
       disk_size_gb: "{{ infra_docker_vol_size }}"
+      caching: ReadWrite
       managed_disk_type: "{{ storage_account_type }}"
     image:
       offer: "{{ image_offer }}"
