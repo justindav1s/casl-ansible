@@ -6,6 +6,9 @@
 # - 'aws'
 # - 'azure' (Coming Soon)
 # - 'gcp'
+ansible_user: ocpadmin
+ansible_ssh_user: ocpadmin
+
 hosting_infrastructure: azure
 
 # DNS configurations

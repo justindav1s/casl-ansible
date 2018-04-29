@@ -1,80 +1,70 @@
 ---
-
-# The username Ansible should use to access the instances with
 ansible_user: ocpadmin
-
-# Should Ansible use "become" to gain elevated privileges (i.e.: root)
-ansible_become: true
-
-# Node Labels to use with the CASL tools
-openshift_node_labels: "{{ ec2_tag_node_labels }}"
-
-# CNS relative vars - Uncommented to automatically deploy CNS - 'cns_deploy' from all.yml must be 'true' in that case
-# openshift_storage_glusterfs_namespace: glusterfs
-# openshift_storage_glusterfs_name: cns
-
-# Uncommented to automatically integrate OCP with AWS so EBS can be used as Dynamic Storage backend
-openshift_cloudprovider_kind: aws
-openshift_cloudprovider_aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
-openshift_cloudprovider_aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
-openshift_clusterid: "{{ env_id }}"
-
-
-# OpenShift Specific Configuration Options
-# - Check the official OpenShift documentation for more details
+ansible_ssh_user: ocpadmin
+ansible_become: yes
+openshift_install_examples: true
 deployment_type: openshift-enterprise
-openshift_deployment_type: openshift-enterprise
-containerized: false
-
-### OCP version to install
 openshift_release: v3.9
-
-osm_default_node_selector: 'region=primary'
+docker_udev_workaround: True
+openshift_use_dnsmasq: true
+openshift_master_default_subdomain: "apps.{{ env_id }}.digitaldevops.net"
+openshift_override_hostname_check: true
 osm_use_cockpit: true
-osm_cockpit_plugins:
-- 'cockpit-kubernetes'
+os_sdn_network_plugin_name: 'redhat/openshift-ovs-multitenant'
+openshift_master_api_port: 443
+openshift_master_console_port: 443
+osm_default_node_selector: 'region=app'
+openshift_disable_check: disk_availability,docker_storage,memory_availability,docker_image_availability,package_version
+openshift_cloudprovider_kind: azure
 
-# OpenShift FQDNs, DNS, App domain specific configurations
-openshift_master_default_subdomain: "apps.{{ env_id }}.{{ dns_domain }}"
-openshift_master_cluster_hostname: "master-0.{{ env_id }}.{{ dns_domain }}"
-openshift_master_cluster_public_hostname: "console.{{ env_id }}.{{ dns_domain }}"
+# default selectors for router and registry services
+openshift_router_selector: 'region=infra'
+openshift_registry_selector: 'region=infra'
 
-# Change default ports to use standard 443
-openshift_master_api_port: 8443
-openshift_master_console_port: 8443
+# Deploy Service Catalog
+# openshift_enable_service_catalog: false
 
-# Deploy Logging with dynamic storage
-openshift_hosted_logging_deploy: false
-#openshift_logging_install_logging: true
-#openshift_logging_es_pvc_dynamic: true
-#openshift_logging_es_pvc_size: 40G
-#openshift_logging_curator_default_days: 1
+# template_service_broker_install: false
+template_service_broker_selector: {"region":"infra"}
 
-# Deploy Metrics with dynamic storage
-#openshift_metrics_install_metrics: true
-#openshift_metrics_cassandra_storage_type: dynamic
-#openshift_metrics_cassandra_pvc_size: 40G
-#openshift_metrics_duration: 2
+# Type of clustering being used by OCP
+openshift_master_cluster_method: native
 
-# HTPASSWD Identity Provider
-# - update to other types of auth providers if necessary (i.e: LDAP, OAuth, ...)
-openshift_master_identity_providers:
- - 'name': 'htpasswd_auth'
-   'login': 'true'
-   'challenge': 'true'
-   'kind': 'HTPasswdPasswordIdentityProvider'
-   'filename': '/etc/origin/master/htpasswd'
+# Addresses for connecting to the OpenShift master nodes
+openshift_master_cluster_hostname: $MASTERPUBLICIPHOSTNAME
+openshift_master_cluster_public_hostname: $MASTERPUBLICIPHOSTNAME
+openshift_master_cluster_public_vip: $MASTERPUBLICIPADDRESS
 
-# Uncommented to automatically create a set of test users with the above
-# HTPASSWD Identity Provider
-#create_users:
-#  num_users: 5
-#  prefix: 'rdu-user'
-#  passwd_file: '/etc/origin/master/htpasswd'
-#  password: 'rdu-sample'
+# Enable HTPasswdPasswordIdentityProvider
+openshift_master_identity_providers: [{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 
+# Setup metrics
+openshift_metrics_install_metrics: false
+openshift_metrics_start_cluster: true
+openshift_metrics_hawkular_nodeselector: {"region":"infra"}
+openshift_metrics_cassandra_nodeselector: {"region":"infra"}
+openshift_metrics_heapster_nodeselector: {"region":"infra"}
+openshift_hosted_metrics_public_url: https://metrics.$ROUTING/hawkular/metrics
 
-# OpenShift Node specific parameters
+# Setup logging
+openshift_logging_install_logging: false
+openshift_logging_fluentd_nodeselector: {"logging":"true"}
+openshift_logging_es_nodeselector: {"region":"infra"}
+openshift_logging_kibana_nodeselector: {"region":"infra"}
+openshift_logging_curator_nodeselector: {"region":"infra"}
+openshift_master_logging_public_url: https://kibana.$ROUTING
+openshift_logging_master_public_url: https://$MASTERPUBLICIPHOSTNAME:443
+
+#Certs
+openshift_master_named_certificates: [{"certfile": "/root/certs/digitaldevops.net.cer", "keyfile": "/root/certs/digitaldevops.net.key", "cafile": "/root/certs/ca.cer"}]
+openshift_hosted_router_certificate: {"certfile": "/root/certs/digitaldevops.net.cer", "keyfile": "/root/certs/digitaldevops.net.key", "cafile": "/root/certs/ca.cer"}
+openshift_hosted_registry_routecertificates: {"certfile": "/root/certs/digitaldevops.net.cer", "keyfile": "/root/certs/digitaldevops.net.key", "cafile": "/root/certs/ca.cer"}
+openshift_metrics_hawkular_ca: /root/certs/ca.cer
+openshift_metrics_hawkular_cert: /root/certs/digitaldevops.net.cer
+openshift_metrics_hawkular_key: /root/certs/digitaldevops.net.key
+openshift_logging_kibana_key: /root/certs/digitaldevops.net.key
+openshift_logging_kibana_cert: /root/certs/digitaldevops.net.cer
+openshift_logging_kibana_ca: /root/certs/ca.cer
 openshift_node_kubelet_args:
   minimum-container-ttl-duration:
   - "10s"
