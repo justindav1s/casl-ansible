@@ -17,7 +17,7 @@
     probes:
     - name: "console_probe"
       protocol: Tcp
-      port: 8443
+      port: 443
       interval: 5
       fail_count: 3
     load_balancing_rules:
@@ -28,7 +28,7 @@
       protocol: Tcp
       load_distribution: Default
       frontend_port: 443
-      backend_port: 8443
+      backend_port: 443
       idle_timeout: 4
 
 - name: Create a infra public ip address
