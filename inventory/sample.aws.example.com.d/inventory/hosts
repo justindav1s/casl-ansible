@@ -31,7 +31,6 @@ tag_group_masters_aws
 masters
 tag_group_infra_nodes_aws
 tag_group_app_nodes_aws
-tag_group_cns_nodes_aws
 
 [infra_hosts:children]
 tag_group_infra_nodes_aws
