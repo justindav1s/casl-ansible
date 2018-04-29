@@ -3,7 +3,7 @@
   remote_user: "{{ admin_user }}"
   become: yes
   become_method: sudo
-  gather_facts: no
+  gather_facts: yes
   tasks:
   - name: Uname
     command: "uname -a"
