@@ -63,3 +63,7 @@
 - import_tasks: remove_infra.yml
   when:
     - operation == "absent"
+
+- import_tasks: remove_vms.yml
+  when:
+    - operation == "absent_vms"

@@ -14,21 +14,8 @@
   tasks:
     - meta: refresh_inventory
 
-- hosts: localhost
-  pre_tasks:
-    - import_tasks: ../prep-inventory.yml
-  roles:
-    - role: manage-azure-infra
-      operation: inventory_gen_hosts
-
-- name: Refresh Server inventory
-  hosts: localhost
-  connection: local
-  gather_facts: False
-  tasks:
-    - meta: refresh_inventory
-
-- hosts: cluster_hosts
+- name: Run galaxy/infra-ansible/roles/update-host
+  hosts: cluster_hosts
   gather_facts: false
   tasks:
     - name: Debug hostvar
