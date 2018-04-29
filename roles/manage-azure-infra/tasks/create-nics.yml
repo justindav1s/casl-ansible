@@ -8,7 +8,7 @@
     security_group: "{{ infra_sec_group }}"
     ip_configurations:
     - name: "infra_ipconfig"
-      private_ip_allocation_method: Static
+      private_ip_allocation_method: Dynamic
       primary: True
   with_sequence:
     count="{{ num_infras }}"
@@ -21,7 +21,7 @@
     subnet_name: "{{ master_subnet_name }}"
     ip_configurations:
     - name: "master_ipconfig"
-      private_ip_allocation_method: Static
+      private_ip_allocation_method: Dynamic
       primary: True
   with_sequence:
     count="{{ num_masters }}"
@@ -34,7 +34,7 @@
     subnet_name: "{{ app_subnet_name }}"
     ip_configurations:
     - name: "app_ipconfig"
-      private_ip_allocation_method: Static
+      private_ip_allocation_method: Dynamic
       primary: True
   with_sequence:
     count="{{ num_apps }}"
