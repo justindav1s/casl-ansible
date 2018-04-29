@@ -2,7 +2,7 @@
   azure_rm_publicipaddress:
     resource_group: "{{ ocp_rg_name }}"
     name: "{{ master_lb_public_ip_name }}"
-    allocation_method: Dynamic
+    allocation_method: Static
 
 - name: Create Master load balancer
   azure_rm_loadbalancer:
@@ -35,7 +35,7 @@
   azure_rm_publicipaddress:
     resource_group: "{{ ocp_rg_name }}"
     name: "{{ infra_lb_public_ip_name }}"
-    allocation_method: Dynamic
+    allocation_method: Static
 
 - name: Create Infra load balancer
   azure_rm_loadbalancer:
