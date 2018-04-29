@@ -1,26 +1,32 @@
-- name: remove master scaleset and all storage
-  azure_rm_virtualmachine_scaleset:
+- name: remove master vms and all storage
+  azure_rm_virtualmachine:
     resource_group: "{{ ocp_rg_name }}"
-    name: "{{ master_vm_name }}-scaleset"
+    name: "{{ master_vm_name }}-{{ item }}"
     state: absent
     remove_on_absent:
       - virtual_storage
+  with_sequence:
+    count="{{ num_masters }}"
 
-- name: remove infra scaleset and all storage
-  azure_rm_virtualmachine_scaleset:
+- name: remove infra vms and all storage
+  azure_rm_virtualmachine:
     resource_group: "{{ ocp_rg_name }}"
-    name: "{{ infra_vm_name }}-scaleset"
+    name: "{{ infra_vm_name }}-{{ item }}"
     state: absent
     remove_on_absent:
       - virtual_storage
+  with_sequence:
+    count="{{ num_infras }}"
 
-- name: remove app scaleset and all storage
-  azure_rm_virtualmachine_scaleset:
+- name: remove app vms and all storage
+  azure_rm_virtualmachine:
     resource_group: "{{ ocp_rg_name }}"
-    name: "{{ app_vm_name }}-scaleset"
+    name: "{{ app_vm_name }}-{{ item }}"
     state: absent
     remove_on_absent:
       - virtual_storage
+  with_sequence:
+    count="{{ num_apps }}"
 
 - name: delete a storage account
   azure_rm_storageaccount:
@@ -38,6 +44,27 @@
 - name: delete infra load balancer
   azure_rm_loadbalancer:
     name: "{{ infra_lb_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    state: absent
+
+- name: delete an availability set for masters
+  azure_rm_availabilityset:
+    name: "{{ master_availabilityset_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    state: absent
+
+- name: delete an availability set for infra nodes
+  azure_rm_availabilityset:
+    name: "{{ infra_availabilityset_name }}"
+    location: "{{ azure_zone }}"
+    resource_group: "{{ ocp_rg_name }}"
+    state: absent
+
+- name: delete an availability set for app nodes
+  azure_rm_availabilityset:
+    name: "{{ app_availabilityset_name }}"
     location: "{{ azure_zone }}"
     resource_group: "{{ ocp_rg_name }}"
     state: absent
