@@ -76,9 +76,9 @@ rhsm_repos:
   - "rhel-7-server-ansible-2.5-rpms"
 
 # Keep this to use Red Hat Satellite:
-rhsm_server_hostname: 'sat-6.example.com'
-rhsm_org_id: 'CASL_ORG'
-rhsm_activationkey: 'casl-latest'
+#rhsm_server_hostname: 'sat-6.example.com'
+#rhsm_org_id: 'CASL_ORG'
+#rhsm_activationkey: 'casl-latest'
 
 # Uncomment the following to use RHSM username, password and optionally pool:
 rhsm_username: "{{ lookup('env','RHDN_USERNAME') }}"
