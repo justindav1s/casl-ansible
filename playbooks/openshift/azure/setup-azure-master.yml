@@ -56,14 +56,3 @@
     notify:
     - restart atomic-openshift-master-api
     - restart atomic-openshift-master-controllers
-
-  handlers:
-  - name: restart atomic-openshift-master-api
-    systemd:
-      state: restarted
-      name: atomic-openshift-master-api
-
-  - name: restart atomic-openshift-master-controllers
-    systemd:
-      state: restarted
-      name: atomic-openshift-master-controllers
