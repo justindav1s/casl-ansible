@@ -5,9 +5,9 @@
   become_method: sudo
 
   tasks:
-    - name: "populate /home/{{ ansible_user }}/scunmanaged.yml"
+    - name: "populate /home/{{ ansible_user }}/scunmanaged.json"
       copy:
-        dest: "/home/{{ ansible_user }}/scunmanaged.yml"
+        dest: "/home/{{ ansible_user }}/scunmanaged.json"
         content: |
           {
             "kind": "StorageClass",
@@ -25,9 +25,9 @@
             }
           }
 
-    - name: "populate /home/{{ ansible_user }}/scmanaged.yml"
+    - name: "populate /home/{{ ansible_user }}/scmanaged.json"
       copy:
-        dest: "/home/{{ ansible_user }}/scmanaged.yml"
+        dest: "/home/{{ ansible_user }}/scmanaged.json"
         content: |
           {
             "kind": "StorageClass",
@@ -47,9 +47,9 @@
           }
 
     - name: Create unmanaged storage class
-      shell: "oc create -f /home/{{ ansible_user }}/scunmanaged.yml"
+      shell: "oc create -f /home/{{ ansible_user }}/scunmanaged.json"
       when: storage_kind == 'unmanaged'
 
     - name: Create managed storage class
-      shell: "oc create -f /home/{{ ansible_user }}/scmanaged.yml"
+      shell: "oc create -f /home/{{ ansible_user }}/scmanaged.json"
       when: storage_kind == 'managed'
