@@ -40,14 +40,13 @@ openshift_master_cluster_method=native
 # Addresses for connecting to the OpenShift master nodes
 openshift_master_cluster_hostname=ocp.digitaldevops.net
 openshift_master_cluster_public_hostname="ocp.{{ dns_domain }}"
-openshift_master_cluster_public_vip=51.143.142.168
 
 # Enable HTPasswdPasswordIdentityProvider
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 openshift_master_htpasswd_users={'justin': '$apr1$dCb5zcYj$VbbgLQOfRK0f8W3TSALDP.'}
 
 # Setup metrics
-openshift_metrics_install_metrics=false
+openshift_metrics_install_metrics=true
 openshift_metrics_start_cluster=true
 openshift_metrics_hawkular_nodeselector={"region":"infra"}
 openshift_metrics_cassandra_nodeselector={"region":"infra"}
@@ -94,18 +93,18 @@ etcd
 # Host Groups
 
 [masters:children]
-group_masters_azure
+group_masters_azure openshift_node_labels="{'region': 'master'}" openshift_schedulable=True
 
 [etcd:children]
 group_masters_azure
 
 [nodes:children]
 masters
-group_infra_nodes_azure
-group_app_nodes_azure
+group_infra_nodes_azure openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True
+group_app_nodes_azure openshift_node_labels="{'region': 'primary'}" openshift_schedulable=True
 
 [infra_hosts:children]
-group_infra_nodes_azure
+group_infra_nodes_azure openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True
 
 [glusterfs]
 
