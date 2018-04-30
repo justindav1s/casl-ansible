@@ -4,6 +4,9 @@
 - import_playbook: gcp/post-install.yml
   when: hosting_infrastructure == "gcp"
 
+- import_playbook: azure/post-install.yml
+  when: hosting_infrastructure == "azure"
+
 - hosts: cluster_hosts
   roles:
     - role: sync-keys

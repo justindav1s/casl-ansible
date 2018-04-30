@@ -10,6 +10,7 @@ ansible_user: ocpadmin
 ansible_ssh_user: ocpadmin
 
 hosting_infrastructure: azure
+storage: managed
 
 # DNS configurations
 # the 'dns_domain' will be used as the base domain for the deployment and has

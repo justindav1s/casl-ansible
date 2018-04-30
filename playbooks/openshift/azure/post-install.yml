@@ -1,0 +1,2 @@
+- import_playbook: setup-azure-master.yml
+- import_playbook: setup-azure-node.yml
