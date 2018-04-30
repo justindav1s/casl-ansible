@@ -14,7 +14,12 @@ openshift_release=v3.9
 openshift_master_cluster_method=native
 docker_udev_workaround=True
 openshift_use_dnsmasq=true
-openshift_master_default_subdomain="apps.{{ env_id }}.{{ dns_domain }}"
+
+# Addresses for connecting to the OpenShift master nodes
+openshift_master_cluster_hostname=ocp.digitaldevops.net
+openshift_master_cluster_public_hostname="{{ openshift_master_cluster_hostname }}"
+openshift_master_default_subdomain="apps.{{ openshift_master_cluster_hostname }}"
+
 openshift_override_hostname_check=true
 osm_use_cockpit=true
 os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
@@ -37,21 +42,17 @@ template_service_broker_selector={"region":"infra"}
 # Type of clustering being used by OCP
 openshift_master_cluster_method=native
 
-# Addresses for connecting to the OpenShift master nodes
-openshift_master_cluster_hostname=ocp.digitaldevops.net
-openshift_master_cluster_public_hostname="ocp.{{ dns_domain }}"
-
 # Enable HTPasswdPasswordIdentityProvider
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 openshift_master_htpasswd_users={'justin': '$apr1$dCb5zcYj$VbbgLQOfRK0f8W3TSALDP.'}
 
 # Setup metrics
-openshift_metrics_install_metrics=true
+openshift_metrics_install_metrics=false
 openshift_metrics_start_cluster=true
 openshift_metrics_hawkular_nodeselector={"region":"infra"}
 openshift_metrics_cassandra_nodeselector={"region":"infra"}
 openshift_metrics_heapster_nodeselector={"region":"infra"}
-openshift_hosted_metrics_public_url="https://metrics.apps.{{ env_id }}.{{ dns_domain }}/hawkular/metrics"
+openshift_hosted_metrics_public_url="https://metrics.{{ openshift_master_default_subdomain }}/hawkular/metrics"
 
 # Setup logging
 openshift_logging_install_logging=false
@@ -59,8 +60,8 @@ openshift_logging_fluentd_nodeselector={"logging":"true"}
 openshift_logging_es_nodeselector={"region":"infra"}
 openshift_logging_kibana_nodeselector={"region":"infra"}
 openshift_logging_curator_nodeselector={"region":"infra"}
-openshift_master_logging_public_url="https://kibana.apps.{{ env_id }}.{{ dns_domain }}"
-openshift_logging_master_public_url=https://ocp.digitaldevops.net:443
+openshift_master_logging_public_url="https://kibana.{{ openshift_master_default_subdomain }}"
+openshift_logging_master_public_url=https://{{ openshift_master_cluster_hostname }}:443
 
 #Certs
 openshift_master_named_certificates=[{"certfile": "/root/certs/digitaldevops.net.cer", "keyfile": "/root/certs/digitaldevops.net.key", "cafile": "/root/certs/ca.cer"}]
