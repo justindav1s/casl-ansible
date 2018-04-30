@@ -1,2 +1,5 @@
+- import_playbook: configurestorageclass.yml
 - import_playbook: setup-azure-master.yml
 - import_playbook: setup-azure-node.yml
+- import_playbook: reboot-masters.yml
+- import_playbook: reboot-nodes.yml

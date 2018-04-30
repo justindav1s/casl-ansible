@@ -1,17 +1,55 @@
 ---
 - hosts: masters[0]
   gather_facts: no
-  remote_user: "{{ lookup('env','SUDOUSER') }}"
   become: yes
   become_method: sudo
-  vars:
-    description: "Create Storage Class"
-    storage: "{{ lookup('env','STORAGEKIND') }}"
+
   tasks:
+    - name: "populate /home/{{ ansible_user }}/scunmanaged.yml"
+      copy:
+        dest: "/home/{{ ansible_user }}/scunmanaged.yml"
+        content: |
+          {
+	        "kind": "StorageClass",
+	        "apiVersion": "storage.k8s.io/v1",
+	        "metadata": {
+		        "name": "generic",
+		        "annotations": {
+			      "storageclass.kubernetes.io/is-default-class": "true"
+		        }
+	        },
+	        "provisioner": "kubernetes.io/azure-disk",
+	        "parameters": {
+		        "location": "{{ location }}",
+		        "storageAccount": "{{ storage_account_name }}"
+	        }
+          }
+
+    - name: "populate /home/{{ ansible_user }}/scmanaged.yml"
+      copy:
+        dest: "/home/{{ ansible_user }}/scmanaged.yml"
+        content: |
+          {
+	        "kind": "StorageClass",
+	        "apiVersion": "storage.k8s.io/v1",
+	        "metadata": {
+		        "name": "generic",
+		        "annotations": {
+			      "storageclass.kubernetes.io/is-default-class": "true"
+		        }
+	        },
+	        "provisioner": "kubernetes.io/azure-disk",
+	        "parameters": {
+		        "location": "{{ location }}",
+		        "storageAccount": "{{ storage_account_name }}",
+		        "storageaccounttype": "Premium_LRS"
+	        }
+          }
+
   - name: Create unmanaged storage class
-    shell: oc create -f /home/{{ lookup('env','SUDOUSER') }}/scunmanaged.yml
-    when: storage == 'unmanaged'
+    shell: "oc create -f /home/{{ ansible_user }}/scunmanaged.yml"
+    when: storage_kind == 'unmanaged'
 
   - name: Create managed storage class
-    shell: oc create -f /home/{{ lookup('env','SUDOUSER') }}/scmanaged.yml
-    when: storage == 'managed'
+    shell: "oc create -f /home/{{ ansible_user }}/scmanaged.yml"
+    when: storage_kind == 'managed'
