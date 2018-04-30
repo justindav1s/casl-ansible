@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-rm -rf ~/casl-ansible/playbooks/openshift/*.retry
+DEBUG=
 
-ansible-playbook -v \
+ansible-playbook $DEBUG \
     -i inventory \
     ../../playbooks/openshift/end-to-end.yml \
     -e@./inventory/group_vars/all.yml \
