@@ -4,6 +4,8 @@
 - import_playbook: reboot-masters.yml
 - import_playbook: reboot-nodes.yml
 
+- import_playbook: dockerregistrypublic.yml
+
 - include: ../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
   vars:
       openshift_metrics_install_metrics: True
