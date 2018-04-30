@@ -159,17 +159,17 @@ public_key: "{{ users_home }}/.ssh/id_rsa.pub"
 private_key: "{{ users_home }}/.ssh/id_rsa"
 ssh_publickey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbA6GrgNwS5+GjCpb0/CvMO99ph6xj4iAEEL9HQGPVub+H3ETeuAIB4wPMUESOIZZBk+C/KMCjVttzJX0kk5qvXtnsjvsj5cxz8xFcsh1HLvcEgOxb5IGICp04jKcCJMO0lYob/ZYbzkdz5FyWoi2tBNvDsVEvi9HWY2t6RVzMQYVNRi+RnU9Ez728nammthgefjv/MB4c1TgjT3Nk7e/vFtY9UAr0yZCavBmKwdMHQaZuvy3vnBOPwTBZP9AX/8mXfeQuFoqUJ7nC6ofpWkbcZcf0QejG8kvRA7MtSXj6XJ3O941VS+vtO+V+qvL4MX4MQxVKgVoGNRns0pXjBAgx jusdavis@jusdavis-OSX.local"
 
-master_vm_size: Standard_B2ms
+master_vm_size: Standard_DS2_v2
 master_vm_name: "{{ env_id }}-ocp-master"
 master_docker_vol_size: 50
 num_masters: 2
 
-infra_vm_size: Standard_B2ms
+infra_vm_size: Standard_DS2_v2
 infra_vm_name: "{{ env_id }}-ocp-infra"
 infra_docker_vol_size: 50
 num_infras: 1
 
-app_vm_size: Standard_B2ms
+app_vm_size: Standard_DS2_v2
 app_vm_name: "{{ env_id }}-ocp-app"
 app_docker_vol_size: 50
 num_apps: 1
