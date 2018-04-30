@@ -12,7 +12,8 @@
     systemd:
       state: restarted
       name: atomic-openshift-node
-  post_tasks:
+
+  tasks:
   - name: make sure /etc/azure exists
     file:
       state: directory
