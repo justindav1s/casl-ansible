@@ -28,6 +28,8 @@
         name: ../../../galaxy/infra-ansible/roles/update-host
         tasks_from: wait-for-host
 
+- import_playbook: create-azure-conf.yml
+
 #
 #- hosts: cluster_hosts
 #  tasks:

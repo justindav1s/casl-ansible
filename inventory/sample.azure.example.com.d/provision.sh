@@ -7,3 +7,6 @@ ansible-playbook -v \
     ../../playbooks/openshift/end-to-end.yml \
     -e@./inventory/group_vars/all.yml \
     --extra-vars "operation=deploy"
+
+
+#/etc/origin/cloudprovider/azure.conf
