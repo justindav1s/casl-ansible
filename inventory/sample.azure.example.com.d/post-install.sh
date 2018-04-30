@@ -5,5 +5,5 @@ rm -rf ~/casl-ansible/playbooks/openshift/*.retry
 ansible-playbook -v \
     -i inventory \
     ../../playbooks/openshift/post-install.yml \
-    --module-path=~/casl-ansible \
+    --module-path=/root/casl-ansible/galaxy/openshift-ansible/roles/lib_utils/library \
     -e@./inventory/group_vars/all.yml
