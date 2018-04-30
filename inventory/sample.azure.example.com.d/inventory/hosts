@@ -93,18 +93,33 @@ etcd
 # Host Groups
 
 [masters:children]
-group_masters_azure openshift_node_labels="{'region': 'master'}" openshift_schedulable=True
+group_masters_azure
+
+[masters:vars]
+openshift_node_labels="{'region': 'primary'}"
+openshift_schedulable=True
 
 [etcd:children]
 group_masters_azure
 
 [nodes:children]
 masters
-group_infra_nodes_azure openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True
-group_app_nodes_azure openshift_node_labels="{'region': 'primary'}" openshift_schedulable=True
+group_infra_nodes_azure
+group_app_nodes_azure
 
 [infra_hosts:children]
-group_infra_nodes_azure openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True
+group_infra_nodes_azure
+
+[infra_hosts:vars]
+openshift_node_labels="{'region': 'infra'}"
+openshift_schedulable=True
+
+[app_hosts:children]
+group_app_nodes_azure
+
+[app_hosts:vars]
+openshift_node_labels="{'region': 'app'}"
+openshift_schedulable=True
 
 [glusterfs]
 
