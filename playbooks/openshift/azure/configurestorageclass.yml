@@ -46,10 +46,10 @@
             }
           }
 
-  - name: Create unmanaged storage class
-    shell: "oc create -f /home/{{ ansible_user }}/scunmanaged.yml"
-    when: storage_kind == 'unmanaged'
+    - name: Create unmanaged storage class
+      shell: "oc create -f /home/{{ ansible_user }}/scunmanaged.yml"
+      when: storage_kind == 'unmanaged'
 
-  - name: Create managed storage class
-    shell: "oc create -f /home/{{ ansible_user }}/scmanaged.yml"
-    when: storage_kind == 'managed'
+    - name: Create managed storage class
+      shell: "oc create -f /home/{{ ansible_user }}/scmanaged.yml"
+      when: storage_kind == 'managed'
