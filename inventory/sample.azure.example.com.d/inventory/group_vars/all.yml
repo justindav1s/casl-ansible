@@ -164,7 +164,7 @@ master_vm_name: "{{ env_id }}-ocp-master"
 master_docker_vol_size: 50
 num_masters: 2
 
-infra_vm_size: Standard_DS2_v2
+infra_vm_size: Standard_D4s_v3
 infra_vm_name: "{{ env_id }}-ocp-infra"
 infra_docker_vol_size: 50
 num_infras: 1
