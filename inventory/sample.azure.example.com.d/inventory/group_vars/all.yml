@@ -176,3 +176,5 @@ num_apps: 1
 
 storage_account_name: ocpstacc
 storage_account_type: Premium_LRS
+
+managed_disk_type: Standard_LRS

@@ -5,8 +5,7 @@
     vm_size: "{{ master_vm_size }}"
     os_type: Linux
     ssh_password_enabled: false
-    storage_account: "{{ storage_account_name }}"
-    managed_disk_type: "{{ storage_account_type }}"
+    managed_disk_type: "{{ managed_disk_type }}"
     admin_username: "{{ admin_user }}"
     subnet_name: "{{ master_subnet_name }}"
     availability_set: "{{ master_availabilityset_name }}"
@@ -18,9 +17,7 @@
     data_disks:
     - lun: 0
       disk_size_gb: "{{ master_docker_vol_size }}"
-      storage_container_name: "{{ master_vm_name }}-{{ item }}-docker-vol"
-      managed_disk_type: "{{ storage_account_type }}"
-      storage_account_name: "{{ storage_account_name }}"
+      managed_disk_type: "{{ managed_disk_type }}"
     image:
       offer: "{{ image_offer }}"
       publisher: "{{ image_publisher }}"
