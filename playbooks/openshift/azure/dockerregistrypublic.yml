@@ -25,7 +25,7 @@
               accountkey:  "UBilB63WKlMXSbMSvTY8FTy4zSoqa3SaYzrnq6OjGM7fA4LQ8SJ5Ot8zLvmeH6tJqjcTo/NNr8PqIqo5YLGiAA=="
               container: registry
               realm: core.windows.net
-           auth:
+          auth:
             openshift:
               realm: openshift
           middleware:
