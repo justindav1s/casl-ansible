@@ -175,4 +175,4 @@ app_docker_vol_size: 50
 num_apps: 1
 
 storage_account_name: ocpstacc
-storage_account_type: Standard_LRS
+storage_account_type: Premium_LRS
