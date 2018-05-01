@@ -1,17 +1,17 @@
-- import_playbook: configurestorageclass.yml
-- import_playbook: setup-azure-master.yml
-- import_playbook: setup-azure-node.yml
-#- import_playbook: reboot-masters.yml
-#- import_playbook: reboot-nodes.yml
+#- import_playbook: configurestorageclass.yml
+#- import_playbook: setup-azure-master.yml
+#- import_playbook: setup-azure-node.yml
+##- import_playbook: reboot-masters.yml
+##- import_playbook: reboot-nodes.yml
 
 - import_playbook: dockerregistrypublic.yml
 
-- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
-  vars:
-      openshift_metrics_install_metrics: True
-      openshift_metrics_cassandra_storage_type: "dynamic"
-
-- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
-  vars:
-      openshift_logging_install_logging: True
-      openshift_logging_es_pvc_dynamic: True
+#- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
+#  vars:
+#      openshift_metrics_install_metrics: True
+#      openshift_metrics_cassandra_storage_type: "dynamic"
+#
+#- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
+#  vars:
+#      openshift_logging_install_logging: True
+#      openshift_logging_es_pvc_dynamic: True
