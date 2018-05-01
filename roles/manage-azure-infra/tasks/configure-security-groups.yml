@@ -26,14 +26,14 @@
         direction: Inbound
       - name: 'AllowWebConsole'
         protocol: Tcp
-        source_address_prefix: "*"
+        source_address_prefix: "Internet"
         destination_port_range: 8443
         access: Allow
         priority: 103
         direction: Inbound
       - name: 'AllowWebConsole443'
         protocol: Tcp
-        source_address_prefix: "*"
+        source_address_prefix: "Internet"
         destination_port_range: 443
         access: Allow
         priority: 104
@@ -83,14 +83,14 @@
         direction: Inbound
       - name: 'AllowHTTP'
         protocol: Tcp
-        source_address_prefix: "AzureLoadBalancer"
+        source_address_prefix: "Internet"
         destination_port_range: 80
         access: Allow
         priority: 101
         direction: Inbound
       - name: 'AllowHTTPS'
         protocol: Tcp
-        source_address_prefix: "AzureLoadBalancer"
+        source_address_prefix: "Internet"
         destination_port_range: 443
         access: Allow
         priority: 102
