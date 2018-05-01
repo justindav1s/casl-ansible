@@ -60,8 +60,8 @@ openshift_logging_fluentd_nodeselector={"logging":"true"}
 openshift_logging_es_nodeselector={"region":"infra"}
 openshift_logging_kibana_nodeselector={"region":"infra"}
 openshift_logging_curator_nodeselector={"region":"infra"}
-openshift_master_logging_public_url="https://kibana.{{ openshift_master_default_subdomain }}"
-openshift_logging_master_public_url=https://{{ openshift_master_cluster_hostname }}:443
+openshift_master_logging_public_url="https://kibana.apps.digitaldevops.net"
+openshift_logging_master_public_url=https://ocp.digitaldevops.net:443
 
 #Certs
 openshift_master_named_certificates=[{"certfile": "/root/certs/digitaldevops.net.cer", "keyfile": "/root/certs/digitaldevops.net.key", "cafile": "/root/certs/ca.cer"}]
