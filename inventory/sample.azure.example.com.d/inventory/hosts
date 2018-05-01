@@ -44,8 +44,7 @@ openshift_master_cluster_method=native
 
 # Enable HTPasswdPasswordIdentityProvider
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
-openshift_master_htpasswd_users={'justin': '$apr1$dCb5zcYj$VbbgLQOfRK0f8W3TSALDP.'}
-openshift_master_htpasswd_users={"{{ ansible_user }}": '$apr1$vby50oZ2$67qhwukvaUn1g2F6XIzQO0'}
+openshift_master_htpasswd_users={'justin': '$apr1$dCb5zcYj$VbbgLQOfRK0f8W3TSALDP.', "{{ ansible_user }}": '$apr1$vby50oZ2$67qhwukvaUn1g2F6XIzQO0'}
 
 # Setup metrics
 openshift_metrics_install_metrics=false

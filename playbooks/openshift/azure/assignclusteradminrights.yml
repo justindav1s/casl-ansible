@@ -8,3 +8,5 @@
   tasks:
   - name: make OpenShift user cluster admin
     shell: "oc adm policy add-cluster-role-to-user cluster-admin {{ ansible_user }} --config=/etc/origin/master/admin.kubeconfig"
+  - name: make OpenShift user cluster admin
+    shell: "oc adm policy add-cluster-role-to-user cluster-admin justin --config=/etc/origin/master/admin.kubeconfig"
