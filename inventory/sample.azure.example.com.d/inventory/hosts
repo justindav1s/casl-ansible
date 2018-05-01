@@ -49,13 +49,14 @@ openshift_master_htpasswd_users={'justin': '$apr1$dCb5zcYj$VbbgLQOfRK0f8W3TSALDP
 # Setup metrics
 openshift_metrics_install_metrics=false
 openshift_metrics_start_cluster=true
+openshift_metrics_cassandra_storage_type=dynamic
 openshift_metrics_hawkular_nodeselector={"region":"infra"}
 openshift_metrics_cassandra_nodeselector={"region":"infra"}
 openshift_metrics_heapster_nodeselector={"region":"infra"}
-#openshift_hosted_metrics_public_url="https://metrics.{{ openshift_master_default_subdomain }}/hawkular/metrics"
 
 # Setup logging
 openshift_logging_install_logging=false
+openshift_logging_es_pvc_dynamic=True
 openshift_logging_fluentd_nodeselector={"logging":"true"}
 openshift_logging_es_nodeselector={"region":"infra"}
 openshift_logging_kibana_nodeselector={"region":"infra"}
@@ -76,6 +77,12 @@ openshift_logging_kibana_ca=/root/certs/ca.cer
 
 # Configure node kubelet arguments. pods-per-core is valid in OpenShift Origin 1.3 or OpenShift Container Platform 3.3 and later.
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['85'], 'image-gc-low-threshold': ['75']}
+
+openshift_prometheus_namespace=openshift-metrics
+openshift_prometheus_node_selector={"region":"infra"}
+openshift_prometheus_alertmanager_storage_kind=dynamic
+openshift_prometheus_alertbuffer_storage_kind=dynamic
+openshift_prometheus_storage_kind=dynamic
 
 
 [cluster_hosts:children]
