@@ -50,6 +50,9 @@
     - name: "oc secrets new registry-config config.yaml=/home/{{ ansible_user }}/registrystorage.yml  -n default"
       shell: "oc secrets new registry-config config.yaml=/home/{{ ansible_user }}/registrystorage.yml -n default"
 
+    - name: "oc delete volume dc/docker-registry -n default"
+      shell: "oc delete volume dc/docker-registry -n default"
+
     - name: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
       shell: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
 
