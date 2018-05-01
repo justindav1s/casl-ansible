@@ -6,5 +6,10 @@
   vars:
     description: "Set registry to use Azure Storage"
   tasks:
-  - name: Configure docker-registry to use Azure Storage
-    shell: oc env dc docker-registry -n default -e REGISTRY_STORAGE=azure -e REGISTRY_STORAGE_AZURE_ACCOUNTNAME={{ lookup('env','REGISTRYSA') }} -e REGISTRY_STORAGE_AZURE_ACCOUNTKEY={{ lookup('env','ACCOUNTKEY') }} -e REGISTRY_STORAGE_AZURE_CONTAINER=registry
+  - name: "oc secrets new registry-config config.yaml=registryconfig.yaml  -n default"
+    shell: "oc secrets new registry-config config.yaml=registryconfig.yaml -n default"
+  - name: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
+    shell: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
+  - name: "oc set env dc/docker-registry REGISTRY_CONFIGURATION_PATH=/etc/docker/registry/config.yaml -n default"
+    shell: "oc set env dc/docker-registry REGISTRY_CONFIGURATION_PATH=/etc/docker/registry/config.yaml -n default"
+
