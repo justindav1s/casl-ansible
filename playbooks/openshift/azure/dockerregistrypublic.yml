@@ -50,12 +50,12 @@
     - name: "oc secrets new registry-config config.yaml=/home/{{ ansible_user }}/registrystorage.yml  -n default"
       shell: "oc secrets new registry-config config.yaml=/home/{{ ansible_user }}/registrystorage.yml -n default"
 
-    - name: "oc rollout latest docker-registry -n default"
-      shell: "oc rollout latest docker-registry -n default"
+#    - name: "oc rollout latest docker-registry -n default"
+#      shell: "oc rollout latest docker-registry -n default"
 
-#    - name: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
-#      shell: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
-#
-#    - name: "oc set env dc/docker-registry REGISTRY_CONFIGURATION_PATH=/etc/docker/registry/config.yaml -n default"
-#      shell: "oc set env dc/docker-registry REGISTRY_CONFIGURATION_PATH=/etc/docker/registry/config.yaml -n default"
+    - name: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
+      shell: "oc volume dc/docker-registry --add --type=secret --secret-name=registry-config -m /etc/docker/registry/ -n default"
+
+    - name: "oc set env dc/docker-registry REGISTRY_CONFIGURATION_PATH=/etc/docker/registry/config.yaml -n default"
+      shell: "oc set env dc/docker-registry REGISTRY_CONFIGURATION_PATH=/etc/docker/registry/config.yaml -n default"
 
