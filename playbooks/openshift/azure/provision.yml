@@ -30,11 +30,3 @@
 
 - import_playbook: create-azure-conf.yml
 
-#
-#- hosts: cluster_hosts
-#  tasks:
-#    - name: Set Openshift Hostnames
-#      set_fact:
-#        openshift_hostname: "{{ ec2_private_dns_name }}"
-#        openshift_public_hostname: "{{ ec2_public_dns_name }}"
-
