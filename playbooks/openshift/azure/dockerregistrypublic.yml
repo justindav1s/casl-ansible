@@ -44,8 +44,8 @@
 
 
 
-    - name: "oc delete secrets registry-config -n default"
-      shell: "oc delete secrets registry-config -n default"
+#    - name: "oc delete secrets registry-config -n default"
+#      shell: "oc delete secrets registry-config -n default"
 
     - name: "oc secrets new registry-config config.yaml=/home/{{ ansible_user }}/registrystorage.yml  -n default"
       shell: "oc secrets new registry-config config.yaml=/home/{{ ansible_user }}/registrystorage.yml -n default"

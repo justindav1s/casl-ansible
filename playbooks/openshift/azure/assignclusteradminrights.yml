@@ -1,0 +1,10 @@
+---
+- hosts: master0
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  vars:
+    description: "Make user : {{ ansible_user }} a cluster admin"
+  tasks:
+  - name: make OpenShift user cluster admin
+    shell: "oc adm policy add-cluster-role-to-user cluster-admin {{ ansible_user }} --config=/etc/origin/master/admin.kubeconfig"
