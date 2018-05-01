@@ -1,10 +1,10 @@
-#- import_playbook: configurestorageclass.yml
-#- import_playbook: setup-azure-master.yml
-#- import_playbook: setup-azure-node.yml
-##- import_playbook: reboot-masters.yml
-##- import_playbook: reboot-nodes.yml
-#
-#- import_playbook: dockerregistrypublic.yml
+- import_playbook: configurestorageclass.yml
+- import_playbook: setup-azure-master.yml
+- import_playbook: setup-azure-node.yml
+#- import_playbook: reboot-masters.yml
+#- import_playbook: reboot-nodes.yml
+
+- import_playbook: dockerregistrypublic.yml
 
 - include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
   vars:
