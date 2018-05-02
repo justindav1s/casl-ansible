@@ -4,19 +4,23 @@
 #
 #set -x
 #
-#oc login https://${IP}:8443 -u $USER
+oc login https://ocp.digitaldevops.net -u justin
 #
 IMAGE=openshift-azure-deployer:latest
-#REGISTRY_HOST=docker-registry-default.apps.ocp.datr.eu:443
+REGISTRY_HOST=docker-registry-default.apps.digitaldevops.net:443
 #
-#oc project ${CICD_PROJECT}
+oc project openshift
+
+TOKEN=`oc whoami -t`
+
+docker login -p $TOKEN -u justin $REGISTRY_HOST
 
 docker build -t $IMAGE .
 #docker tag $IMAGE $REGISTRY_HOST/${CICD_PROJECT}/$IMAGE
 #
-#TOKEN=`oc whoami -t`
 #
-#docker login -p $TOKEN -u justin $REGISTRY_HOST
+#
+
 #
 #sleep 5
 #
