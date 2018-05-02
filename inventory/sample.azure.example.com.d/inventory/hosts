@@ -80,9 +80,9 @@ openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'imag
 
 openshift_prometheus_namespace=openshift-metrics
 openshift_prometheus_node_selector={"region":"infra"}
-openshift_prometheus_alertmanager_storage_kind=dynamic
-openshift_prometheus_alertbuffer_storage_kind=dynamic
-openshift_prometheus_storage_kind=dynamic
+openshift_prometheus_alertmanager_storage_kind=pvc
+openshift_prometheus_alertbuffer_storage_kind=pvc
+openshift_prometheus_storage_kind=pvc
 
 
 [cluster_hosts:children]
