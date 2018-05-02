@@ -1,1 +1,0 @@
-../../scripts/ec2.py

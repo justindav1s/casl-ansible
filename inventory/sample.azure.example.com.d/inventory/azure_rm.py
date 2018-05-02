@@ -19,172 +19,172 @@
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-"""
-Azure External Inventory Script
-===============================
-Generates dynamic inventory by making API requests to the Azure Resource
-Manager using the Azure Python SDK. For instruction on installing the
-Azure Python SDK see http://azure-sdk-for-python.readthedocs.org/
 
-Authentication
---------------
-The order of precedence is command line arguments, environment variables,
-and finally the [default] profile found in ~/.azure/credentials.
+# Azure External Inventory Script
+# ===============================
+# Generates dynamic inventory by making API requests to the Azure Resource
+# Manager using the Azure Python SDK. For instruction on installing the
+# Azure Python SDK see http://azure-sdk-for-python.readthedocs.org/
+#
+# Authentication
+# --------------
+# The order of precedence is command line arguments, environment variables,
+# and finally the [default] profile found in ~/.azure/credentials.
+#
+# If using a credentials file, it should be an ini formatted file with one or
+# more sections, which we refer to as profiles. The script looks for a
+# [default] section, if a profile is not specified either on the command line
+# or with an environment variable. The keys in a profile will match the
+# list of command line arguments below.
+#
+# For command line arguments and environment variables specify a profile found
+# in your ~/.azure/credentials file, or a service principal or Active Directory
+# user.
+#
+# Command line arguments:
+#  - profile
+#  - client_id
+#  - secret
+#  - subscription_id
+#  - tenant
+#  - ad_user
+#  - password
+#  - cloud_environment
+#
+# Environment variables:
+#  - AZURE_PROFILE
+#  - AZURE_CLIENT_ID
+#  - AZURE_SECRET
+#  - AZURE_SUBSCRIPTION_ID
+#  - AZURE_TENANT
+#  - AZURE_AD_USER
+#  - AZURE_PASSWORD
+#  - AZURE_CLOUD_ENVIRONMENT
+#
+# Run for Specific Host
+# -----------------------
+# When run for a specific host using the --host option, a resource group is
+# required. For a specific host, this script returns the following variables:
+#
+# {
+#   "ansible_host": "XXX.XXX.XXX.XXX",
+#   "computer_name": "computer_name2",
+#   "fqdn": null,
+#   "id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Compute/virtualMachines/object-name",
+#   "image": {
+#     "offer": "CentOS",
+#     "publisher": "OpenLogic",
+#     "sku": "7.1",
+#     "version": "latest"
+#   },
+#   "location": "westus",
+#   "mac_address": "00-00-5E-00-53-FE",
+#   "name": "object-name",
+#   "network_interface": "interface-name",
+#   "network_interface_id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/networkInterfaces/object-name1",
+#   "network_security_group": null,
+#   "network_security_group_id": null,
+#   "os_disk": {
+#     "name": "object-name",
+#     "operating_system_type": "Linux"
+#   },
+#   "plan": null,
+#   "powerstate": "running",
+#   "private_ip": "172.26.3.6",
+#   "private_ip_alloc_method": "Static",
+#   "provisioning_state": "Succeeded",
+#   "public_ip": "XXX.XXX.XXX.XXX",
+#   "public_ip_alloc_method": "Static",
+#   "public_ip_id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/publicIPAddresses/object-name",
+#   "public_ip_name": "object-name",
+#   "resource_group": "galaxy-production",
+#   "security_group": "object-name",
+#   "security_group_id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/networkSecurityGroups/object-name",
+#   "tags": {
+#       "db": "database"
+#   },
+#   "type": "Microsoft.Compute/virtualMachines",
+#   "virtual_machine_size": "Standard_DS4"
+# }
+#
+# Groups
+# ------
+# When run in --list mode, instances are grouped by the following categories:
+#  - azure
+#  - location
+#  - resource_group
+#  - security_group
+#  - tag key
+#  - tag key_value
+#
+# Control groups using azure_rm.ini or set environment variables:
+#
+# AZURE_GROUP_BY_RESOURCE_GROUP=yes
+# AZURE_GROUP_BY_LOCATION=yes
+# AZURE_GROUP_BY_SECURITY_GROUP=yes
+# AZURE_GROUP_BY_TAG=yes
+#
+# Select hosts within specific resource groups by assigning a comma separated list to:
+#
+# AZURE_RESOURCE_GROUPS=resource_group_a,resource_group_b
+#
+# Select hosts for specific tag key by assigning a comma separated list of tag keys to:
+#
+# AZURE_TAGS=key1,key2,key3
+#
+# Select hosts for specific locations:
+#
+# AZURE_LOCATIONS=eastus,westus,eastus2
+#
+# Or, select hosts for specific tag key:value pairs by assigning a comma separated list key:value pairs to:
+#
+# AZURE_TAGS=key1:value1,key2:value2
+#
+# If you don't need the powerstate, you can improve performance by turning off powerstate fetching:
+# AZURE_INCLUDE_POWERSTATE=no
+#
+# azure_rm.ini
+# ------------
+# As mentioned above, you can control execution using environment variables or a .ini file. A sample
+# azure_rm.ini is included. The name of the .ini file is the basename of the inventory script (in this case
+# 'azure_rm') with a .ini extension. It also assumes the .ini file is alongside the script. To specify
+# a different path for the .ini file, define the AZURE_INI_PATH environment variable:
+#
+#   export AZURE_INI_PATH=/path/to/custom.ini
+#
+# Powerstate:
+# -----------
+# The powerstate attribute indicates whether or not a host is running. If the value is 'running', the machine is
+# up. If the value is anything other than 'running', the machine is down, and will be unreachable.
+#
+# Examples:
+# ---------
+#   Execute /bin/uname on all instances in the galaxy-qa resource group
+#   $ ansible -i azure_rm.py galaxy-qa -m shell -a "/bin/uname -a"
+#
+#   Use the inventory script to print instance specific information
+#   $ contrib/inventory/azure_rm.py --host my_instance_host_name --pretty
+#
+#   Use with a playbook
+#   $ ansible-playbook -i contrib/inventory/azure_rm.py my_playbook.yml --limit galaxy-qa
+#
+#
+# Insecure Platform Warning
+# -------------------------
+# If you receive InsecurePlatformWarning from urllib3, install the
+# requests security packages:
+#
+#     pip install requests[security]
+#
+#
+# author:
+#     - Chris Houseknecht (@chouseknecht)
+#     - Matt Davis (@nitzmahone)
+#
+# Company: Ansible by Red Hat
+#
+# Version: 1.0.0
 
-If using a credentials file, it should be an ini formatted file with one or
-more sections, which we refer to as profiles. The script looks for a
-[default] section, if a profile is not specified either on the command line
-or with an environment variable. The keys in a profile will match the
-list of command line arguments below.
-
-For command line arguments and environment variables specify a profile found
-in your ~/.azure/credentials file, or a service principal or Active Directory
-user.
-
-Command line arguments:
- - profile
- - client_id
- - secret
- - subscription_id
- - tenant
- - ad_user
- - password
- - cloud_environment
-
-Environment variables:
- - AZURE_PROFILE
- - AZURE_CLIENT_ID
- - AZURE_SECRET
- - AZURE_SUBSCRIPTION_ID
- - AZURE_TENANT
- - AZURE_AD_USER
- - AZURE_PASSWORD
- - AZURE_CLOUD_ENVIRONMENT
-
-Run for Specific Host
------------------------
-When run for a specific host using the --host option, a resource group is
-required. For a specific host, this script returns the following variables:
-
-{
-  "ansible_host": "XXX.XXX.XXX.XXX",
-  "computer_name": "computer_name2",
-  "fqdn": null,
-  "id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Compute/virtualMachines/object-name",
-  "image": {
-    "offer": "CentOS",
-    "publisher": "OpenLogic",
-    "sku": "7.1",
-    "version": "latest"
-  },
-  "location": "westus",
-  "mac_address": "00-00-5E-00-53-FE",
-  "name": "object-name",
-  "network_interface": "interface-name",
-  "network_interface_id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/networkInterfaces/object-name1",
-  "network_security_group": null,
-  "network_security_group_id": null,
-  "os_disk": {
-    "name": "object-name",
-    "operating_system_type": "Linux"
-  },
-  "plan": null,
-  "powerstate": "running",
-  "private_ip": "172.26.3.6",
-  "private_ip_alloc_method": "Static",
-  "provisioning_state": "Succeeded",
-  "public_ip": "XXX.XXX.XXX.XXX",
-  "public_ip_alloc_method": "Static",
-  "public_ip_id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/publicIPAddresses/object-name",
-  "public_ip_name": "object-name",
-  "resource_group": "galaxy-production",
-  "security_group": "object-name",
-  "security_group_id": "/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/networkSecurityGroups/object-name",
-  "tags": {
-      "db": "database"
-  },
-  "type": "Microsoft.Compute/virtualMachines",
-  "virtual_machine_size": "Standard_DS4"
-}
-
-Groups
-------
-When run in --list mode, instances are grouped by the following categories:
- - azure
- - location
- - resource_group
- - security_group
- - tag key
- - tag key_value
-
-Control groups using azure_rm.ini or set environment variables:
-
-AZURE_GROUP_BY_RESOURCE_GROUP=yes
-AZURE_GROUP_BY_LOCATION=yes
-AZURE_GROUP_BY_SECURITY_GROUP=yes
-AZURE_GROUP_BY_TAG=yes
-
-Select hosts within specific resource groups by assigning a comma separated list to:
-
-AZURE_RESOURCE_GROUPS=resource_group_a,resource_group_b
-
-Select hosts for specific tag key by assigning a comma separated list of tag keys to:
-
-AZURE_TAGS=key1,key2,key3
-
-Select hosts for specific locations:
-
-AZURE_LOCATIONS=eastus,westus,eastus2
-
-Or, select hosts for specific tag key:value pairs by assigning a comma separated list key:value pairs to:
-
-AZURE_TAGS=key1:value1,key2:value2
-
-If you don't need the powerstate, you can improve performance by turning off powerstate fetching:
-AZURE_INCLUDE_POWERSTATE=no
-
-azure_rm.ini
-------------
-As mentioned above, you can control execution using environment variables or a .ini file. A sample
-azure_rm.ini is included. The name of the .ini file is the basename of the inventory script (in this case
-'azure_rm') with a .ini extension. It also assumes the .ini file is alongside the script. To specify
-a different path for the .ini file, define the AZURE_INI_PATH environment variable:
-
-  export AZURE_INI_PATH=/path/to/custom.ini
-
-Powerstate:
------------
-The powerstate attribute indicates whether or not a host is running. If the value is 'running', the machine is
-up. If the value is anything other than 'running', the machine is down, and will be unreachable.
-
-Examples:
----------
-  Execute /bin/uname on all instances in the galaxy-qa resource group
-  $ ansible -i azure_rm.py galaxy-qa -m shell -a "/bin/uname -a"
-
-  Use the inventory script to print instance specific information
-  $ contrib/inventory/azure_rm.py --host my_instance_host_name --pretty
-
-  Use with a playbook
-  $ ansible-playbook -i contrib/inventory/azure_rm.py my_playbook.yml --limit galaxy-qa
-
-
-Insecure Platform Warning
--------------------------
-If you receive InsecurePlatformWarning from urllib3, install the
-requests security packages:
-
-    pip install requests[security]
-
-
-author:
-    - Chris Houseknecht (@chouseknecht)
-    - Matt Davis (@nitzmahone)
-
-Company: Ansible by Red Hat
-
-Version: 1.0.0
-"""
 
 import argparse
 import json
