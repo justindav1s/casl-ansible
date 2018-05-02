@@ -5,25 +5,16 @@
 #- import_playbook: configure-registry-storage.yml
 - import_playbook: configure-azure-files-secret.yml
 
-- hosts: localhost
-  gather_facts: no
-  become: yes
-  become_method: sudo
-  tasks:
-  - name: display public key !
-    debug:
-      var: ssh_publickey
+- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
+  vars:
+      openshift_metrics_install_metrics: True
+      openshift_metrics_cassandra_storage_type: "dynamic"
 
-#- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
-#  vars:
-#      openshift_metrics_install_metrics: True
-#      openshift_metrics_cassandra_storage_type: "dynamic"
-#
-#- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
-#  vars:
-#      openshift_logging_install_logging: True
-#
-#- import_playbook: ../../../galaxy/openshift-ansible/playbooks/openshift-prometheus/config.yml
-#  vars:
-#      openshift_hosted_prometheus_deploy: True
+- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
+  vars:
+      openshift_logging_install_logging: True
+
+- import_playbook: ../../../galaxy/openshift-ansible/playbooks/openshift-prometheus/config.yml
+  vars:
+      openshift_hosted_prometheus_deploy: True
 
