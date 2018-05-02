@@ -6,7 +6,7 @@
 #
 #oc login https://${IP}:8443 -u $USER
 #
-#IMAGE=centos7-java8:latest
+IMAGE=openshift-azure-deployer:latest
 #REGISTRY_HOST=docker-registry-default.apps.ocp.datr.eu:443
 #
 #oc project ${CICD_PROJECT}
