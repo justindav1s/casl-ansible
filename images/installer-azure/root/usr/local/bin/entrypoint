@@ -14,8 +14,7 @@ echo "This is Entrypoint Script"
 
 cd ~
 
-git clone git@github.com:justindav1s/casl-ansible.git
-git clone git@github.com:justindav1s/openshift-azure.git
+git clone https://github.com:justindav1s/casl-ansible.git
 
 mkdir /root/.azure
 cp /root/openshift-azure/dev1/azure_credentials /root/.azure/credentials

@@ -24,11 +24,8 @@ LABEL name="openshift/ocp-azure" \
       summary="OpenShift's installation and configuration tool" \
       description="A containerized openshift-ansible image to let you run playbooks to install, upgrade, maintain and check an OpenShift cluster"
 
-RUN mkdir /root/.ssh && chmod 700 /root/.ssh
-
-COPY ssh /root/.ssh
-
-RUN chmod 600 /root/.ssh/id_rsa && chmod 644 /root/.ssh/id_rsa.pub
+RUN mkdir /root/.azure
+COPY /root/.azure/credentials /root/.azure
 
 COPY root /
 
