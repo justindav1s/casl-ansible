@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-../inventory/azure_rm.py --list
+inventory/azure_rm.py --list
 
 
 ansible-playbook \
