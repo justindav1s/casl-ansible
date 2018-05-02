@@ -6,4 +6,6 @@ cp -r /root/.azure .
 
 cp -r /root/.ssh/* ssh
 
+cp /root/bin/env.sh bin
+
 docker build -t $IMAGE .

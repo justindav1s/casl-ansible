@@ -18,6 +18,12 @@ git clone https://github.com/justindav1s/casl-ansible.git
 
 cd /root/casl-ansible/inventory/sample.azure.example.com.d
 
+. /root/bin/env.sh
+
+env
+
 ./setup.sh
 
 ./test.sh
+
+#./provision.sh

@@ -36,6 +36,8 @@ RUN mkdir /root/.ssh
 COPY ssh/id_rsa /root/.ssh
 COPY ssh/id_rsa.pub /root/.ssh
 
+COPY bin /root
+
 COPY root /
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint" ]
