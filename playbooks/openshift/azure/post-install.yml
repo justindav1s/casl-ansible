@@ -1,8 +1,8 @@
-- import_playbook: configurestorageclass.yml
+- import_playbook: configure-default-storageclass.yml
 - import_playbook: setup-azure-master.yml
 - import_playbook: setup-azure-node.yml
-- import_playbook: assignclusteradminrights.yml
-- import_playbook: dockerregistrypublic.yml
+- import_playbook: assign-cluster-admin-rights.yml
+- import_playbook: configure_registry_storage.yml
 #
 #- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
 #  vars:

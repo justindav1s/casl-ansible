@@ -6,7 +6,7 @@
   vars:
     description: "Set registry to use Azure Storage"
   tasks:
-    - name: "populate /home/{{ ansible_user }}/registrystorage.yml"
+    - name: "Setup registry storage : populate /home/{{ ansible_user }}/registrystorage.yml"
       copy:
         dest: "/home/{{ ansible_user }}/registrystorage.yml"
         content: |
