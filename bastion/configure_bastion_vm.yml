@@ -44,8 +44,3 @@
     git:
       repo: 'git@github.com:justindav1s/casl-ansible.git'
       dest: /root/casl-ansible
-
-  - name: clone openshift-azure
-    git:
-      repo: 'git@github.com:justindav1s/openshift-azure.git'
-      dest: /root/openshift-azure
