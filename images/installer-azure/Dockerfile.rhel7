@@ -1,4 +1,4 @@
-FROM rhel7.3:7.3-released
+FROM rhel7
 
 MAINTAINER OpenShift Team <dev@lists.openshift.redhat.com>
 
