@@ -12,10 +12,10 @@
 #- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
 #  vars:
 #      openshift_logging_install_logging: True
-
-- import_playbook: ../../../galaxy/openshift-ansible/playbooks/openshift-prometheus/config.yml
-  vars:
-      openshift_hosted_prometheus_deploy: True
-
-#- import_playbook: reboot-masters.yml
-#- import_playbook: reboot-nodes.yml
+#
+#- import_playbook: ../../../galaxy/openshift-ansible/playbooks/openshift-prometheus/config.yml
+#  vars:
+#      openshift_hosted_prometheus_deploy: True
+#
+##- import_playbook: reboot-masters.yml
+##- import_playbook: reboot-nodes.yml
