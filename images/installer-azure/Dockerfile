@@ -21,7 +21,6 @@ RUN yum-config-manager --disable rhel-7-server-htb-rpms \
 
 RUN yum install -y --setopt=tsflags=nodocs libffi-devel openssl-devel \
  && pip install --upgrade pip \
- && pip install ansible[azure] \
  && pip install cryptography==2.1.4
 
 LABEL name="openshift/ocp-azure" \
