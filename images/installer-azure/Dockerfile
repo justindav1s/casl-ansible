@@ -23,6 +23,8 @@ RUN yum install -y --setopt=tsflags=nodocs libffi-devel openssl-devel \
  && pip install --upgrade pip \
  && pip install cryptography==2.1.4
 
+RUN pip install ansible[azure]
+
 LABEL name="openshift/ocp-azure" \
       summary="OpenShift's installation and configuration tool" \
       description="A containerized openshift-ansible image to let you run playbooks to install, upgrade, maintain and check an OpenShift cluster"
