@@ -22,6 +22,8 @@ RUN yum-config-manager --disable rhel-7-server-htb-rpms \
 RUN pip install --upgrade pip \
  && pip install ansible[azure]
 
+RUN pip upgrade pyopenssl
+
 LABEL name="openshift/ocp-azure" \
       summary="OpenShift's installation and configuration tool" \
       description="A containerized openshift-ansible image to let you run playbooks to install, upgrade, maintain and check an OpenShift cluster"
