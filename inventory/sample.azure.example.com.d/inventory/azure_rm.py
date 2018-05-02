@@ -19,7 +19,7 @@
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-'''
+"""
 Azure External Inventory Script
 ===============================
 Generates dynamic inventory by making API requests to the Azure Resource
@@ -184,7 +184,7 @@ author:
 Company: Ansible by Red Hat
 
 Version: 1.0.0
-'''
+"""
 
 import argparse
 import json
