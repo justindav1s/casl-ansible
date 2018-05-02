@@ -129,7 +129,7 @@ admin_user: ocpadmin
 users_home: /root
 public_key: "{{ users_home }}/.ssh/id_rsa.pub"
 private_key: "{{ users_home }}/.ssh/id_rsa"
-ssh_publickey: "{{ lookup('file', /root/.ssh/id_rsa.pub) }}"
+ssh_publickey: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
 
 master_vm_size: Standard_DS2_v2
 master_vm_name: "{{ env_id }}-ocp-master"
