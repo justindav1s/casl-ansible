@@ -1,11 +1,4 @@
 ---
-
-# 'hosting_infrastructure' is used to drive the correct behavior based
-# on the hosting infrastructure, cloud provider, etc. Valid values are:
-# - 'openstack'
-# - 'aws'
-# - 'azure' (Coming Soon)
-# - 'gcp'
 ansible_user: ocpadmin
 ansible_ssh_user: ocpadmin
 
@@ -61,10 +54,6 @@ labels_app_nodes_tag: "{region: primary}"
 labels_cns_nodes_tag: "{region: primary}"
 
 
-# Should the cluster be configured for HA
-# - currently not supported
-ha_mode: false
-
 # Subscription Management Details
 rhsm_register: True
 rhsm_repos:
@@ -85,23 +74,6 @@ rhsm_password: "{{ lookup('env','RHDN_PASSWORD') }}"
 # leave commented out if you want to `--auto-attach` a pool
 rhsm_pool: "{{ lookup('env','RHDN_POOL_ID') }}"
 
-# WARNING: By default the tools will update RPMs during provisioning. If any packages are
-# updated, the host(s) will reboot to ensure the correct versions are in use. This may 
-# NOT be desirable during an consecutive runs to just apply minor changes. If you would 
-# like to avoid "surprise" reboots, make sure to uncomment the following variable. 
-# Do NOTE that a reboot should most likely happen on initial install, so it's important
-# that this variable is commented out or set to `True` for initial runs.
-#update_cluster_hosts: False
-
-# Uncomment the following `additional_list_of_packages_to_install` to list additional
-# packages/RPMs to install during install
-#additional_list_of_packages_to_install:
-#  - rpm-1
-#  - rpm-2
-
-
-
-#JD Vars
 
 env_id: "dev1"
 
@@ -157,7 +129,7 @@ admin_user: ocpadmin
 users_home: /root
 public_key: "{{ users_home }}/.ssh/id_rsa.pub"
 private_key: "{{ users_home }}/.ssh/id_rsa"
-ssh_publickey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbA6GrgNwS5+GjCpb0/CvMO99ph6xj4iAEEL9HQGPVub+H3ETeuAIB4wPMUESOIZZBk+C/KMCjVttzJX0kk5qvXtnsjvsj5cxz8xFcsh1HLvcEgOxb5IGICp04jKcCJMO0lYob/ZYbzkdz5FyWoi2tBNvDsVEvi9HWY2t6RVzMQYVNRi+RnU9Ez728nammthgefjv/MB4c1TgjT3Nk7e/vFtY9UAr0yZCavBmKwdMHQaZuvy3vnBOPwTBZP9AX/8mXfeQuFoqUJ7nC6ofpWkbcZcf0QejG8kvRA7MtSXj6XJ3O941VS+vtO+V+qvL4MX4MQxVKgVoGNRns0pXjBAgx jusdavis@jusdavis-OSX.local"
+ssh_publickey: "{{ lookup('file', /root/.ssh/id_rsa.pub) }}"
 
 master_vm_size: Standard_DS2_v2
 master_vm_name: "{{ env_id }}-ocp-master"

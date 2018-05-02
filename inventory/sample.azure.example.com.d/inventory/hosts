@@ -93,13 +93,6 @@ masters
 nodes
 etcd
 
-# Set variables common for all OSEv3 hosts
-#[OSEv3:vars]
-
-# For OSEv3 normal group vars, see ./group_vars/OSEv3.yml
-
-# Host Groups
-
 [masters:children]
 group_masters_azure
 
