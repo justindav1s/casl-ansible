@@ -15,15 +15,13 @@ RUN yum-config-manager --disable rhel-7-server-htb-rpms \
  && yum-config-manager --enable rhel-7-server-ose-3.9-rpms \
  && yum-config-manager --enable rhel-7-fast-datapath-rpms \
  && yum -y update \
- && INSTALL_PKGS="bash atomic-openshift-utils ansible python2-pip git wget gcc python-devel nmap-ncat bind-utils wget git net-tools iptables-services bridge-utils bash-completion kexec-tools sos psacct" \
+ && INSTALL_PKGS="bash atomic-openshift-utils ansible python2-pip git wget gcc python-devel nmap-ncat bind-utils wget git net-tools iptables-services bridge-utils bash-completion kexec-tools sos psacct libffi-devel openssl-devel" \
  && yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS \
  && yum clean all
 
-RUN yum install -y --setopt=tsflags=nodocs libffi-devel openssl-devel \
- && pip install --upgrade pip \
- && pip install cryptography==2.1.4
-
-RUN pip install ansible[azure]
+RUN pip install --upgrade pip \
+ && pip install cryptography==2.1.4 \
+ && pip install ansible[azure]
 
 LABEL name="openshift/ocp-azure" \
       summary="OpenShift's installation and configuration tool" \
