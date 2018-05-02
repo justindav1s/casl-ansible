@@ -1,0 +1,41 @@
+- name: add rhel-7-server-rpms repo
+  command: "subscription-manager repos --enable rhel-7-server-rpms"
+  register: result
+- debug:
+    var: result.stdout
+
+- name: add rhel-7-server-extras-rpms repo
+  command: "subscription-manager repos --enable rhel-7-server-extras-rpms"
+  register: result
+- debug:
+    var: result.stdout
+
+- name: add rhel-7-server-optional-rpms repo
+  command: "subscription-manager repos --enable rhel-7-server-optional-rpms"
+  register: result
+- debug:
+    var: result.stdout
+
+- name: add rhel-7-server-ose-3.9-rpms repo
+  command: "subscription-manager repos --enable rhel-7-server-ose-3.9-rpms"
+  register: result
+- debug:
+    var: result.stdout
+
+- name: add rhel-7-fast-datapath-rpms repo
+  command: "subscription-manager repos --enable rhel-7-fast-datapath-rpms"
+  register: result
+- debug:
+    var: result.stdout
+
+- name: add rhel-7-server-ansible-2.5-rpms repo
+  command: "subscription-manager repos --enable rhel-7-server-ansible-2.5-rpms"
+  register: result
+- debug:
+    var: result.stdout
+
+- name: subscription-manager repos --disable=rhel-7-server-htb-rpms
+  command: "subscription-manager repos --disable=rhel-7-server-htb-rpms"
+  register: result
+- debug:
+    var: result.stdout

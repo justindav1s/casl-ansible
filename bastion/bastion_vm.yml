@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Create a Bastion VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ bastion_rg_name }}"
+      name: bastion
+      vm_size: "{{ bastion_vm_size }}"
+      os_type: Linux
+      ssh_password_enabled: false
+      storage_account: "{{ bastion_storage_account_name }}"
+      managed_disk_type: "{{ storage_account_type }}"
+      admin_username: "{{ admin_user }}"
+      ssh_public_keys:
+      - path: "/home/{{ admin_user }}/.ssh/authorized_keys"
+        key_data: "{{ ssh_publickey }}"
+      network_interface_names:
+      - "{{ bastion_networkinterface_name }}"
+      data_disks:
+      - lun: 0
+        disk_size_gb: 10
+        managed_disk_type: "{{ storage_account_type }}"
+        storage_account_name: "{{ bastion_storage_account_name }}"
+      image:
+        offer: "{{ image_offer }}"
+        publisher: "{{ image_publisher }}"
+        sku: "{{ image_sku }}"
+        version: "{{ image_version }}"
+      tags:
+        bastion: "true"
+        name: "bastion"

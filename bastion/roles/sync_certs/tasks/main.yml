@@ -1,0 +1,30 @@
+- name: make home for ssh keys
+  file:
+    path: ~/certs
+    state: directory
+    mode: 0700
+
+- name: copy ca.cer to servers
+  copy:
+   src: ca.cer
+   dest: ~/certs
+   mode: 0600
+
+- name: copy fullchain.cer to servers
+  copy:
+   src: fullchain.cer
+   dest: ~/certs
+   mode: 0600
+
+- name: copy digitaldevops.net.cer to servers
+  copy:
+   src: digitaldevops.net.cer
+   dest: ~/certs
+   mode: 0600
+
+- name: copy digitaldevops.net.key to servers
+  copy:
+   src: digitaldevops.net.key
+   dest: ~/certs
+   mode: 0600
+

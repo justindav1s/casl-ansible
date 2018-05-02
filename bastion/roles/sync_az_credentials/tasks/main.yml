@@ -1,0 +1,53 @@
+- name: make home for ssh keys
+  file:
+    path: ~/.azure
+    state: directory
+    mode: 0700
+
+- name: copy ~/.azure/credentials
+  copy:
+   src: ~/.azure/credentials
+   dest: ~/.azure/credentials
+   mode: 0600
+
+- name: make bash_profile
+  file:
+    path: ~/.bash_profile
+    state: file
+    mode: 0755
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export TENANTID={{ tenantid }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export SUBSCRIPTIONID={{ subscriptionid }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export AADCLIENTID={{ aadclientid }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export AADCLIENTSECRET={{ aadclientsecret }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export RESOURCEGROUP={{ resourcegroup }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export CLOUDNAME={{ cloudname }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export LOCATION={{ location }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export REGISTRYSA={{ registrysa }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export ACCOUNTKEY={{ registrysa_account_key }}'

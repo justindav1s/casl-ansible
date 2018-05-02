@@ -1,0 +1,29 @@
+- name: make home for ssh keys
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: 0700
+
+- name: copy ssh_config to servers
+  copy:
+   src: "ssh_config"
+   dest: ~/.ssh/config
+   mode: 0600
+
+- name: copy public key to servers
+  copy:
+   src: "{{ public_key }}"
+   dest: ~/.ssh/id_rsa.pub
+   mode: 0664
+
+- name: copy private key to servers
+  copy:
+   src: "{{ private_key }}"
+   dest: ~/.ssh/id_rsa
+   mode: 0600
+
+- name: copy authorized_keys to servers
+  copy:
+   src: "{{ public_key }}"
+   dest: ~/.ssh/authorized_keys
+   mode: 0600

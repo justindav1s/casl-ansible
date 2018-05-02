@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  roles:
+    - role: create_resource_group
+      rg_name: "{{ bastion_rg_name }}"
+
+    - role: create_vnet
+      rg_name: "{{ bastion_rg_name }}"
+      vnet_name: "{{ bastion_vnet_name }}"
+      vnet_cidr: "{{ bastion_vnet_cidr }}"
+
+    - role: create_subnet
+      rg_name: "{{ bastion_rg_name }}"
+      subnet_name: "{{ bastion_subnet_name }}"
+      subnet_cidr: "{{ bastion_cidr }}"
+      vnet_name: "{{ bastion_vnet_name }}"
+
+    - role: create_storage_account
+      rg_name: "{{ bastion_rg_name }}"
+      storage_account_name: "{{ bastion_storage_account_name }}"
+
+  tasks:
+  - name: Create a network interface for Bastion
+    azure_rm_networkinterface:
+      name: "{{ bastion_networkinterface_name }}"
+      resource_group: "{{ bastion_rg_name }}"
+      virtual_network_name: "{{ bastion_vnet_name }}"
+      subnet_name: "{{ bastion_subnet_name }}"
+      security_group_name: "{{ bastion_networkinterface_name }}_sg"
+      ip_configurations:
+        - name: "bastion_ipconfig"
+          public_ip_address_name: "{{ bastion_publicip_name }}"
+          private_ip_allocation_method: Dynamic
+          primary: True

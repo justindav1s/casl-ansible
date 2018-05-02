@@ -1,9 +1,22 @@
 ---
+env_id: "dev1"
 ansible_user: ocpadmin
 ansible_ssh_user: ocpadmin
+users_home: /root
 
 hosting_infrastructure: azure
 storage_kind: managed
+
+azure_zone: "{{ lookup('env','LOCATION') }}"
+tenantid: "{{ lookup('env','TENANTID') }}"
+subscriptionid: "{{ lookup('env','SUBSCRIPTIONID') }}"
+aadclientid: "{{ lookup('env','AADCLIENTID') }}"
+aadclientsecret: "{{ lookup('env','AADCLIENTSECRET') }}"
+resourcegroup: "{{ bastion_rg_name }}"
+location: "{{ azure_zone }}"
+cloudname: "{{ lookup('env','CLOUDNAME') }}"
+registrysa: "{{ lookup('env','REGISTRYSA') }}"
+registrysa_account_key: "{{ lookup('env','ACCOUNTKEY') }}"
 
 # DNS configurations
 # the 'dns_domain' will be used as the base domain for the deployment and has
@@ -11,23 +24,31 @@ storage_kind: managed
 # the 'dns_nameservers' is a list of DNS resolvers the cluster should use
 dns_domain: "digitaldevops.net"
 
+public_key: "{{ users_home }}/.ssh/id_rsa.pub"
+private_key: "{{ users_home }}/.ssh/id_rsa"
+ssh_publickey: "{{ lookup('file', '{{ users_home }}/.ssh/id_rsa.pub') }}"
+
+master_vm_size: Standard_DS2_v2
+master_vm_name: "{{ env_id }}-ocp-master"
+master_docker_vol_size: 50
+num_masters: 2
+
+infra_vm_size: Standard_D4s_v3
+infra_vm_name: "{{ env_id }}-ocp-infra"
+infra_docker_vol_size: 50
+num_infras: 1
+
+app_vm_size: Standard_DS2_v2
+app_vm_name: "{{ env_id }}-ocp-app"
+app_docker_vol_size: 50
+num_apps: 1
+
+storage_account_name: ocpstacc
+storage_account_type: Premium_LRS
+managed_disk_type: Standard_LRS
+
 # Specify the version of docker to use
 docker_version: "1.13.*"
-
-# master(s) root (/) volume size and device
-# - default values are "/dev/sda1" and "50"
-master_root_volume: "/dev/sda2"
-master_root_volume_size: 30
-
-# infra node(s) root (/) volume size and device
-# - default values are "/dev/sda1" and "50"
-infra_node_root_volume: "/dev/sda2"
-infra_node_root_volume_size: 30
-
-# app node(s) root (/) volume size and device
-# - default values are "/dev/sda1" and "50"
-app_node_root_volume: "/dev/sda2"
-app_node_root_volume_size: 30
 
 # Docker Storage configuration variables - for all nodes
 # - default values are "/dev/xvdb" and "40"
@@ -75,10 +96,6 @@ rhsm_password: "{{ lookup('env','RHDN_PASSWORD') }}"
 rhsm_pool: "{{ lookup('env','RHDN_POOL_ID') }}"
 
 
-env_id: "dev1"
-
-azure_zone: uksouth
-
 azure_create_rg: true
 azure_create_vnet: true
 azure_create_subnets: true
@@ -125,28 +142,3 @@ master_lb_public_ip_name: "{{ env_id }}-master-lb-publicip"
 infra_lb_name: "{{ env_id }}-infra_lb"
 infra_lb_public_ip_name: "{{ env_id }}-infra-lb-publicip"
 
-admin_user: ocpadmin
-users_home: /root
-public_key: "{{ users_home }}/.ssh/id_rsa.pub"
-private_key: "{{ users_home }}/.ssh/id_rsa"
-ssh_publickey: "{{ lookup('file', '{{ users_home }}/.ssh/id_rsa.pub') }}"
-
-master_vm_size: Standard_DS2_v2
-master_vm_name: "{{ env_id }}-ocp-master"
-master_docker_vol_size: 50
-num_masters: 2
-
-infra_vm_size: Standard_D4s_v3
-infra_vm_name: "{{ env_id }}-ocp-infra"
-infra_docker_vol_size: 50
-num_infras: 1
-
-app_vm_size: Standard_DS2_v2
-app_vm_name: "{{ env_id }}-ocp-app"
-app_docker_vol_size: 50
-num_apps: 1
-
-storage_account_name: ocpstacc
-storage_account_type: Premium_LRS
-
-managed_disk_type: Standard_LRS

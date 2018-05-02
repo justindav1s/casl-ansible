@@ -1,0 +1,51 @@
+---
+- hosts: bastion
+  remote_user: "{{ admin_user }}"
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  roles:
+  - rhel_subscribe
+  - ocp_repos
+  - sync_keys
+  - sync_az_credentials
+  - sync_rhn_credentials
+  - sync_certs
+  - docker_config
+
+  tasks:
+  - name: install atomic-openshift-utils, ansible
+    yum:
+      name: atomic-openshift-utils, ansible
+      state: latest
+
+  - name: gcc, python-devel, nmap-ncat, bind-utils, wget, git, net-tools, iptables-services, bridge-utils, bash-completion, kexec-tools, sos, psacct
+    yum:
+      name: gcc, python-devel, nmap-ncat, bind-utils, wget, git, net-tools, iptables-services, bridge-utils, bash-completion, kexec-tools, sos, psacct
+      state: latest
+
+  - name: add epel repo
+    command: "rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+    register: result
+    ignore_errors: True
+  - debug:
+      var: result.stdout
+
+  - name: install python2-pip
+    yum:
+      name: "python2-pip"
+      state: latest
+
+  - name: Install ansible azure extensions
+    command: "pip install ansible[azure]"
+    register: result
+
+  - name: clone casl-ansible
+    git:
+      repo: 'git@github.com:justindav1s/casl-ansible.git'
+      dest: /root/casl-ansible
+
+  - name: clone openshift-azure
+    git:
+      repo: 'git@github.com:justindav1s/openshift-azure.git'
+      dest: /root/openshift-azure

@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+  - name: remove vm and all storage
+    azure_rm_virtualmachine:
+      resource_group: "{{ bastion_rg_name }}"
+      name: bastion
+      state: absent
+      remove_on_absent:
+          - virtual_storage

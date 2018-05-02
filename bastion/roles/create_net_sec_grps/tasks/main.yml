@@ -1,0 +1,12 @@
+- azure_rm_securitygroup:
+    resource_group: "{{ ocp_rg_name }}"
+    name: "{{ base_netsecgrp }}"
+    purge_rules: yes
+    rules:
+      - name: 'AllowSSH'
+        protocol: Tcp
+        source_address_prefix: "*"
+        destination_port_range: 22
+        access: Allow
+        priority: 100
+        direction: Inbound

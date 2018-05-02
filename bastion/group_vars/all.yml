@@ -1,0 +1,37 @@
+env_id: "dev1"
+bastion_rg_name: "{{ env_id }}-ocp-rg"
+
+zone: "{{ lookup('env','LOCATION') }}"
+tenantid: "{{ lookup('env','TENANTID') }}"
+subscriptionid: "{{ lookup('env','SUBSCRIPTIONID') }}"
+aadclientid: "{{ lookup('env','AADCLIENTID') }}"
+aadclientsecret: "{{ lookup('env','AADCLIENTSECRET') }}"
+resourcegroup: "{{ bastion_rg_name }}"
+location: "{{ zone }}"
+cloudname: "{{ lookup('env','CLOUDNAME') }}"
+registrysa: "{{ lookup('env','REGISTRYSA') }}"
+registrysa_account_key: "{{ lookup('env','ACCOUNTKEY') }}"
+
+admin_user: ocpadmin
+users_home: /Users/jusdavis
+public_key: "{{ users_home }}/.ssh/id_rsa.pub"
+private_key: "{{ users_home }}/.ssh/id_rsa"
+ssh_publickey: "{{ lookup('file', '{{ users_home }}/.ssh/id_rsa.pub') }}"
+image_offer: RHEL
+image_publisher: RedHat
+image_sku: '7.4'
+image_version: latest
+
+bastion_vnet_name: "{{ env_id }}-ocp-vnet"
+bastion_vnet_cidr: 10.1.0.0/16
+
+bastion_subnet_name: bastion_subnet
+bastion_cidr: 10.1.1.0/24
+bastion_publicip_name: bastion_publicip
+bastion_networkinterface_name: bastion_nic
+bastion_vm_size: Standard_DS2_v2
+
+base_netsecgrp: base_netsecgrp
+storage_account_name: ocpstacc
+bastion_storage_account_name: bastionstacc
+storage_account_type: Standard_LRS

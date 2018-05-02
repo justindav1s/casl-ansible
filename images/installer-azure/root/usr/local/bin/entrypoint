@@ -10,8 +10,22 @@
 # The current user's entry must be correctly defined in this file in order for
 # the `ssh` command to work within the created container.
 
-if ! whoami &>/dev/null; then
-  echo "${USER:-default}:x:$(id -u):$(id -g):Default User:$HOME:/sbin/nologin" >> /etc/passwd
-fi
+echo "This is Entrypoint Script"
 
-exec "$@"
+cd ~
+
+git clone git@github.com:justindav1s/casl-ansible.git
+git clone git@github.com:justindav1s/openshift-azure.git
+
+mkdir /root/.azure
+cp /root/openshift-azure/dev1/azure_credentials /root/.azure/credentials
+
+rm -rf  /root/.ssh/*
+cp /root/openshift-azure/dev1/ssh/id_rsa /root/.ssh &&cp /root/openshift-azure/dev1/ssh/id_rsa.pub /root/.ssh
+chmod 700 /root/.ssh && chmod 600 /root/.ssh/id_rsa && chmod 644 /root/.ssh/id_rsa.pub
+
+cd /root/casl-ansible/inventory/sample.azure.example.com.d
+
+./setup.sh
+
+./test.sh

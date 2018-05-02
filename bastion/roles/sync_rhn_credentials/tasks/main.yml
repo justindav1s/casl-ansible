@@ -1,0 +1,26 @@
+- name: set rhdn username fact
+  set_fact: user="{{ lookup('env','RHDN_USERNAME') }}"
+
+- name: set rhdn password fact
+  set_fact: password="{{ lookup('env','RHDN_PASSWORD') }}"
+
+- name: set rhdn pool id fact
+  set_fact: poolid="{{ lookup('env','RHDN_POOL_ID') }}"
+
+- name: make bash_profile
+  file:
+    path: ~/.bash_profile
+    state: file
+    mode: 0755
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export RHDN_USERNAME={{ user }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export RHDN_PASSWORD={{ password }}'
+
+- lineinfile:
+    path: ~/.bash_profile
+    line: 'export RHDN_POOL_ID={{ poolid }}'
