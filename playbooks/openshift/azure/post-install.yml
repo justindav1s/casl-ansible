@@ -12,7 +12,7 @@
   tasks:
   - name: display public key !
     debug:
-      var: "{{ ssh_publickey }}"
+      var: ssh_publickey
 
 #- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
 #  vars:
