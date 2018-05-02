@@ -21,8 +21,8 @@
             delete:
               enabled: true
             azure:
-              accountname: "{{ lookup('env','REGISTRYSA') }}"
-              accountkey:  "{{ lookup('env','ACCOUNTKEY') }}"
+              accountname: "{{ registrysa }}"
+              accountkey:  "{{ registrysa_account_key }}"
               container: registry
               realm: core.windows.net
           auth:

@@ -1,18 +1,18 @@
-#- import_playbook: configure-default-storageclass.yml
-#- import_playbook: setup-azure-master.yml
-#- import_playbook: setup-azure-node.yml
-#- import_playbook: assign-cluster-admin-rights.yml
-#- import_playbook: configure-registry-storage.yml
-#- import_playbook: configure-azure-files-secret.yml
-#
-#- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
-#  vars:
-#      openshift_metrics_install_metrics: True
-#      openshift_metrics_cassandra_storage_type: "dynamic"
-#
-#- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
-#  vars:
-#      openshift_logging_install_logging: True
+- import_playbook: configure-default-storageclass.yml
+- import_playbook: setup-azure-master.yml
+- import_playbook: setup-azure-node.yml
+- import_playbook: assign-cluster-admin-rights.yml
+- import_playbook: configure-registry-storage.yml
+- import_playbook: configure-azure-files-secret.yml
+
+- include: ../../../galaxy/openshift-ansible/playbooks/openshift-metrics/config.yml
+  vars:
+      openshift_metrics_install_metrics: True
+      openshift_metrics_cassandra_storage_type: "dynamic"
+
+- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
+  vars:
+      openshift_logging_install_logging: True
 
 - import_playbook: ../../../galaxy/openshift-ansible/playbooks/openshift-prometheus/config.yml
   vars:

@@ -24,14 +24,14 @@
       dest: "{{ azure_conf }}"
       content: |
         {
-          "aadClientId": "{{ lookup('env','AADCLIENTID') }}",
-          "aadClientSecret": "{{ lookup('env','AADCLIENTSECRET') }}",
-          "aadTenantId": "{{ lookup('env','TENANTID') }}",
-          "subscriptionId": "{{ lookup('env','SUBSCRIPTIONID') }}",
-          "tenantId": "{{ lookup('env','TENANTID') }}",
-          "resourceGroup": "{{ lookup('env','RESOURCEGROUP') }}",
-          "location": "{{ lookup('env','LOCATION') }}",
-          "cloud": "{{ lookup('env','CLOUDNAME')}}"
+          "aadClientId": "{{ aadclientid }}",
+          "aadClientSecret": "{{ aadclientsecret }}",
+          "aadTenantId": "{{ tenantid }}",
+          "subscriptionId": "{{ subscriptionid }}",
+          "tenantId": "{{ tenantid }}",
+          "resourceGroup": "{{ resourcegroup }}",
+          "location": "{{ location }}",
+          "cloud": "{{ cloudname }}"
         }
     notify:
     - restart atomic-openshift-node
