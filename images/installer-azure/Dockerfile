@@ -32,6 +32,10 @@ LABEL name="openshift/ocp-azure" \
 RUN mkdir /root/.azure
 COPY .azure/credentials /root/.azure
 
+RUN mkdir /root/.ssh
+COPY ssh/id_rsa /root/.ssh
+COPY ssh/id_rsa.pub /root/.ssh
+
 COPY root /
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint" ]
