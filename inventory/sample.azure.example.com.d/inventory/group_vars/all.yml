@@ -8,12 +8,14 @@ admin_user: ocpadmin
 hosting_infrastructure: azure
 storage_kind: managed
 
+ocp_rg_name: "{{ env_id }}-ocp-rg"
+
 azure_zone: "{{ lookup('env','LOCATION') }}"
 tenantid: "{{ lookup('env','TENANTID') }}"
 subscriptionid: "{{ lookup('env','SUBSCRIPTIONID') }}"
 aadclientid: "{{ lookup('env','AADCLIENTID') }}"
 aadclientsecret: "{{ lookup('env','AADCLIENTSECRET') }}"
-resourcegroup: "{{ bastion_rg_name }}"
+resourcegroup: "{{ ocp_rg_name }}"
 location: "{{ azure_zone }}"
 cloudname: "{{ lookup('env','CLOUDNAME') }}"
 registrysa: "{{ lookup('env','REGISTRYSA') }}"
@@ -109,7 +111,7 @@ azure_create_master_instances: true
 azure_create_infra_instances: true
 azure_create_app_instances: true
 
-ocp_rg_name: "{{ env_id }}-ocp-rg"
+
 
 ocp_vnet_name: "{{ env_id }}-ocp-vnet"
 ocp_vnet_cidr: 10.1.0.0/16
