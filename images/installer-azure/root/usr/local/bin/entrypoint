@@ -14,14 +14,7 @@ echo "This is Entrypoint Script"
 
 cd ~
 
-git clone https://github.com:justindav1s/casl-ansible.git
-
-mkdir /root/.azure
-cp /root/openshift-azure/dev1/azure_credentials /root/.azure/credentials
-
-rm -rf  /root/.ssh/*
-cp /root/openshift-azure/dev1/ssh/id_rsa /root/.ssh &&cp /root/openshift-azure/dev1/ssh/id_rsa.pub /root/.ssh
-chmod 700 /root/.ssh && chmod 600 /root/.ssh/id_rsa && chmod 644 /root/.ssh/id_rsa.pub
+git clone https://github.com/justindav1s/casl-ansible.git
 
 cd /root/casl-ansible/inventory/sample.azure.example.com.d
 
