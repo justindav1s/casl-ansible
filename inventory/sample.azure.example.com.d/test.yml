@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  tasks:
+  - name: Uname
+    command: "uname -a"
+    register: result
+
+  - debug:
+      var: result.stdout
+
+  - debug:
+      var: hostvars

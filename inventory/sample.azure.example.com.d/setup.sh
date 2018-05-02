@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cd ~/casl-ansible
+cd /root/casl-ansible
 
 ansible-galaxy install -r casl-requirements.yml -p galaxy
