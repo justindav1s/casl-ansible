@@ -25,7 +25,7 @@ LABEL name="openshift/ocp-azure" \
       description="A containerized openshift-ansible image to let you run playbooks to install, upgrade, maintain and check an OpenShift cluster"
 
 RUN mkdir /root/.azure
-COPY /root/.azure/credentials /root/.azure
+COPY .azure/credentials /root/.azure
 
 COPY root /
 
