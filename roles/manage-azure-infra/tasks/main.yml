@@ -57,14 +57,6 @@
     - azure_create_app_instances
     - operation == "deploy"
 
-#- import_tasks: update_dns.yml
-#  when:
-#    - operation == "deploy"
-#
-#- import_tasks: start_stop_instances.yml
-#  when: (operation == "running") or
-#        (operation == "stopped")
-#
 - import_tasks: remove_infra.yml
   when:
     - operation == "absent"
