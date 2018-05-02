@@ -3,6 +3,7 @@ env_id: "dev1"
 ansible_user: ocpadmin
 ansible_ssh_user: ocpadmin
 users_home: /root
+admin_user: ocpadmin
 
 hosting_infrastructure: azure
 storage_kind: managed
