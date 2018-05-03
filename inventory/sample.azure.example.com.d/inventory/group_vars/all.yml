@@ -114,7 +114,7 @@ azure_create_app_instances: true
 
 
 ocp_vnet_name: "{{ env_id }}-ocp-vnet"
-ocp_vnet_cidr: 10.1.0.0/16
+ocp_vnet_cidr: 10.228.8.0/21
 
 image_offer: RHEL
 image_publisher: RedHat
@@ -126,11 +126,11 @@ infra_availabilityset_name: infra_availabilityset
 app_availabilityset_name: app_availabilityset
 
 master_subnet_name: "{{ env_id }}-master-subnet"
-master_subnet_cidr: 10.1.2.0/24
+master_subnet_cidr: 10.228.8.0/24
 infra_subnet_name: "{{ env_id }}-infra-subnet"
-infra_subnet_cidr: 10.1.3.0/24
+infra_subnet_cidr: 10.228.9.0/24
 app_subnet_name: "{{ env_id }}-app-subnet"
-app_subnet_cidr : 10.1.4.0/24
+app_subnet_cidr : 10.228.10.0/24
 
 master_networkinterface_name: "{{ env_id }}-master-nic"
 infra_networkinterface_name: "{{ env_id }}-infra-nic"

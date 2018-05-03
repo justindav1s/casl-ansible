@@ -10,9 +10,9 @@
       openshift_metrics_install_metrics: True
       openshift_metrics_cassandra_storage_type: "dynamic"
 
-- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
-  vars:
-      openshift_logging_install_logging: True
+#- include: ../../../galaxy/openshift-ansible/playbooks/openshift-logging/config.yml
+#  vars:
+#      openshift_logging_install_logging: True
 
 - import_playbook: ../../../galaxy/openshift-ansible/playbooks/openshift-prometheus/config.yml
   vars:
