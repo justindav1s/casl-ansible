@@ -18,6 +18,8 @@
   pre_tasks:
     - import_tasks: prep-inventory.yml
   tasks:
+    - set_fact:
+        ansible_host: "{{ inventory_hostname }}"
     - import_role:
         name: ../../galaxy/infra-ansible/roles/rhsm
       vars:
