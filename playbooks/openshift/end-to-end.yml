@@ -1,6 +1,6 @@
 ---
-# Provision Openstack Instances
-- import_playbook: provision-instances.yml
+## Provision Openstack Instances
+#- import_playbook: provision-instances.yml
 
 # Pre-Install Steps
 - import_playbook: pre-install.yml
