@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-rm -rf ../*.retry
+. ~/bin/deloitteenv.sh
 
 ansible-playbook -i ./azure_rm.py ../configure_bastion_vm.yml

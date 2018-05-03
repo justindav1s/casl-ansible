@@ -33,5 +33,5 @@ bastion_vm_size: Standard_DS2_v2
 
 base_netsecgrp: base_netsecgrp
 storage_account_name: registrysa
-bastion_storage_account_name: bastionstacc
+bastion_storage_account_name: bastionstacbetaocp
 storage_account_type: Standard_LRS
