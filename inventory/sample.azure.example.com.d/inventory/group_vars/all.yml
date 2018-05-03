@@ -46,7 +46,7 @@ app_vm_name: "{{ env_id }}-ocp-app"
 app_docker_vol_size: 50
 num_apps: 3
 
-storage_account_name: ocpstacc
+storage_account_name: sabetaopcp20180503
 storage_account_type: Premium_LRS
 managed_disk_type: Standard_LRS
 
