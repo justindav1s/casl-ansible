@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: cluster_hosts
   gather_facts: no
   serial: 1
   become: yes
