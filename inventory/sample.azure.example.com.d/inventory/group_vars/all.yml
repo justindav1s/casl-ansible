@@ -7,6 +7,9 @@ admin_user: ocpadmin
 
 hosting_infrastructure: azure
 storage_kind: managed
+storage_account_name: sabetaopcp20180503
+resourcegroup: "{{ ocp_rg_name }}"
+location: "{{ azure_zone }}"
 
 ocp_rg_name: "{{ env_id }}-ocp-rg"
 
@@ -15,8 +18,6 @@ tenantid: "{{ lookup('env','TENANTID') }}"
 subscriptionid: "{{ lookup('env','SUBSCRIPTIONID') }}"
 aadclientid: "{{ lookup('env','AADCLIENTID') }}"
 aadclientsecret: "{{ lookup('env','AADCLIENTSECRET') }}"
-resourcegroup: "{{ ocp_rg_name }}"
-location: "{{ azure_zone }}"
 cloudname: "{{ lookup('env','CLOUDNAME') }}"
 registrysa: "{{ lookup('env','REGISTRYSA') }}"
 registrysa_account_key: "{{ lookup('env','ACCOUNTKEY') }}"
@@ -46,7 +47,7 @@ app_vm_name: "{{ env_id }}-ocp-app"
 app_docker_vol_size: 50
 num_apps: 3
 
-storage_account_name: sabetaopcp20180503
+
 storage_account_type: Premium_LRS
 managed_disk_type: Standard_LRS
 
