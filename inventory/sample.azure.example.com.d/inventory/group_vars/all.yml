@@ -25,7 +25,7 @@ registrysa_account_key: "{{ lookup('env','ACCOUNTKEY') }}"
 # the 'dns_domain' will be used as the base domain for the deployment and has
 # to be a domain that is managed by Azure DNS within your Azure subscription
 # the 'dns_nameservers' is a list of DNS resolvers the cluster should use
-#dns_domain: "digitaldevops.net"
+dns_domain: "nip.io"
 
 public_key: "{{ users_home }}/.ssh/id_rsa.pub"
 private_key: "{{ users_home }}/.ssh/id_rsa"

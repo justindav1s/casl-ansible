@@ -1,5 +1,5 @@
 env_id: "dev1"
-bastion_rg_name: "{{ env_id }}-ocp-rg"
+bastion_rg_name: "rg-beta-ocp"
 
 zone: "{{ lookup('env','LOCATION') }}"
 tenantid: "{{ lookup('env','TENANTID') }}"
@@ -23,15 +23,15 @@ image_sku: '7.4'
 image_version: latest
 
 bastion_vnet_name: "{{ env_id }}-ocp-vnet"
-bastion_vnet_cidr: 10.1.0.0/16
+bastion_vnet_cidr: 10.228.8.0/21
 
 bastion_subnet_name: bastion_subnet
-bastion_cidr: 10.1.1.0/24
+bastion_cidr: 10.228.11.0/24
 bastion_publicip_name: bastion_publicip
 bastion_networkinterface_name: bastion_nic
 bastion_vm_size: Standard_DS2_v2
 
 base_netsecgrp: base_netsecgrp
-storage_account_name: ocpstacc
+storage_account_name: registrysa
 bastion_storage_account_name: bastionstacc
 storage_account_type: Standard_LRS

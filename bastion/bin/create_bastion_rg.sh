@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-rm -rf ../*.retry
+. ~/bin/deloitteenv.sh
 
 ansible-playbook -i ../inventory/hosts ../bastion_rg.yml
