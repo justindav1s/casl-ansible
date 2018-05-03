@@ -8,10 +8,10 @@ admin_user: ocpadmin
 hosting_infrastructure: azure
 storage_kind: managed
 storage_account_name: sabetaopcp20180503
-resourcegroup: "{{ ocp_rg_name }}"
+resourcegroup: "rg-beta-ocp"
 location: "{{ azure_zone }}"
 
-ocp_rg_name: "{{ env_id }}-ocp-rg"
+ocp_rg_name: "rg-beta-ocp"
 
 azure_zone: "{{ lookup('env','LOCATION') }}"
 tenantid: "{{ lookup('env','TENANTID') }}"
