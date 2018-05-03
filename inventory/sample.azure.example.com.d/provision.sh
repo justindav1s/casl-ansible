@@ -2,6 +2,7 @@
 
 DEBUG=
 
+
 ansible-playbook $DEBUG \
     -i inventory \
     ../../playbooks/openshift/end-to-end.yml \
