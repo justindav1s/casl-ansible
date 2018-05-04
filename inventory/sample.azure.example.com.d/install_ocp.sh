@@ -5,6 +5,11 @@ DEBUG=
 ansible-playbook $DEBUG \
     -f 20 \
     -i inventory \
-    ../../playbooks/openshift/phase2_install.yml \
-    -e@./inventory/group_vars/all.yml \
-    --extra-vars "operation=deploy"
+    /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml \
+    -e@./inventory/group_vars/all.yml
+
+ansible-playbook $DEBUG \
+    -f 20 \
+    -i inventory/hosts \
+    /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml \
+    -e@./inventory/group_vars/all.yml
