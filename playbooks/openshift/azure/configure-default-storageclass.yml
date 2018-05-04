@@ -46,6 +46,9 @@
             }
           }
 
+    - name: "oc delete storageclass generic --ignore-not-found=true -n default"
+      shell: "oc delete storageclass generic --ignore-not-found=true -n default"
+
     - name: Create unmanaged storage class
       shell: "oc create -f /home/{{ ansible_user }}/scunmanaged.json"
       when: storage_kind == 'unmanaged'
