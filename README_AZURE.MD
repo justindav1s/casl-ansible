@@ -14,10 +14,10 @@
 4. Configure Bastion OS, run :
    * bastion/bin/configure_bastion_vm.sh
 5. Logon to Bastion, sudo to root
-6. Make sure your ~/.azure/credentials is correct on the Bastion (contains the correct AZure credentials)
-7. Seup Azure credentials in root's .bash_profile, as this is currently where many privileged variables go. This will be the case until we get private config management. 
+6. Make sure your ~/.azure/credentials is correct on the Bastion (contains the correct Azure credentials)
+7. Setup Azure credentials in root's .bash_profile, as this is currently where many privileged variables go. This will be the case until we get private config management. 
 8. Run /root/casl-ansible/inventory/sample.azure.example.com.d/provision_vms_os.sh
-   * This kicks of a two step process to install to install Openshift
+   * This kicks ofs a two step process to install to install Openshift
       * Provision the VMs
       * Configure the OS
 9. Now take note of : 
