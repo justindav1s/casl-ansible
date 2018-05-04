@@ -8,7 +8,7 @@ admin_user: ocpadmin
 hosting_infrastructure: azure
 storage_kind: managed
 storage_account_name: sabetaopcp20180503
-resourcegroup: "rg-beta-ocp"
+resourcegroup: "rg-beta2-ocp"
 location: "{{ azure_zone }}"
 
 ocp_rg_name: "rg-beta-ocp"
