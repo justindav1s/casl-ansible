@@ -21,7 +21,7 @@ openshift_use_dnsmasq=true
 openshift_master_cluster_hostname=dev1-ocp-master-1
 openshift_master_cluster_public_hostname=ocp.52.174.48.230.nip.io
 openshift_master_default_subdomain=apps.40.68.209.166.nip.io
-openshift_master_cluster_public_vip=52.174.48.230
+
 
 openshift_override_hostname_check=true
 osm_use_cockpit=false
@@ -87,17 +87,17 @@ masters
 nodes
 etcd
 
-[masters]
+[masters:children]
 group_masters_azure
 
 [masters:vars]
 openshift_node_labels="{'region': 'primary',  'zone': 'default'}"
 openshift_schedulable=True
 
-[etcd]
+[etcd:children]
 group_masters_azure
 
-[nodes]
+[nodes:children]
 masters
 group_infra_nodes_azure
 group_app_nodes_azure
