@@ -18,7 +18,7 @@ openshift_use_dnsmasq=true
 # 52.174.48.230 (dev1-master-lb-publicip)
 # 40.68.209.166 (dev1-infra-lb-publicip)
 # Addresses for connecting to the OpenShift master nodes
-openshift_master_cluster_hostname=dev1-ocp-master-1
+openshift_master_cluster_hostname=ocp.52.174.48.230.nip.io
 openshift_master_cluster_public_hostname=ocp.52.174.48.230.nip.io
 openshift_master_default_subdomain=apps.40.68.209.166.nip.io
 
