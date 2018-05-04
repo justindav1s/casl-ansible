@@ -11,7 +11,7 @@ storage_account_name: sabetaopcp20180503
 resourcegroup: "rg-beta2-ocp"
 location: "{{ azure_zone }}"
 
-ocp_rg_name: "rg-beta-ocp"
+ocp_rg_name: "rg-beta2-ocp"
 
 azure_zone: "{{ lookup('env','LOCATION') }}"
 tenantid: "{{ lookup('env','TENANTID') }}"
