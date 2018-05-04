@@ -87,17 +87,17 @@ masters
 nodes
 etcd
 
-[masters:children]
+[masters]
 group_masters_azure
 
 [masters:vars]
 openshift_node_labels="{'region': 'primary',  'zone': 'default'}"
 openshift_schedulable=True
 
-[etcd:children]
+[etcd]
 group_masters_azure
 
-[nodes:children]
+[nodes]
 masters
 group_infra_nodes_azure
 group_app_nodes_azure
