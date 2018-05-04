@@ -4,6 +4,6 @@ DEBUG=
 
 ansible-playbook $DEBUG \
     -i inventory \
-    ../../playbooks/openshift/end-to-end.yml \
+    ../../playbooks/openshift/phase1_vms_os.yml \
     -e@./inventory/group_vars/all.yml \
     --extra-vars "operation=deploy"
