@@ -30,4 +30,8 @@ This will be the case until we get private config management. Ensure that all th
 11. Run /root/casl-ansible/inventory/sample.azure.example.com.d/install_ocp.sh. This will :        
       * Install Openshift
       * Do Azure specific post-install activiries for things like storage access.
+      
+Actions
+1. Automate injection of LB IP addresses (until we get DNS)
+2.       
            
