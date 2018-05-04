@@ -1,10 +1,11 @@
 ## Azure Install process
 
-Gotchas/Requirements Outstanding.
+### Gotchas/Requirements Outstanding.
 
    * Version Control. We have no private place to put this code. This is causing an issue as we need to manually transcribevariable only the Bastion.
    * DNS: would rather use hostnames in inventory, currently using IP addresses.
 
+### The Installation sequence
 1. Configure Resource Group, run :
    * bastion/bin/create_bastion_rg.sh
 2. Create Bastion VM, run :
@@ -26,7 +27,7 @@ Gotchas/Requirements Outstanding.
 10. The IP addresses noted above need to be substituted in the hosts file prior to the Openshift install. 
 The Storage account value needs to go into root's .bash_profile, as this is currently where many privileged variables go.
 This will be the case until we get private config management. Ensure that all the other values in root's .bash_profile are correct
-11. Run /root/casl-ansible/inventory/sample.azure.example.com.d/install_ocp.sh. This will        
+11. Run /root/casl-ansible/inventory/sample.azure.example.com.d/install_ocp.sh. This will :        
       * Install Openshift
       * Do Azure specific post-install activiries for things like storage access.
            
