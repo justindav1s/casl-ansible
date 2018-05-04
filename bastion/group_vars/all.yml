@@ -1,5 +1,5 @@
 env_id: "dev1"
-bastion_rg_name: "rg-beta-ocp"
+bastion_rg_name: "rg-beta2-ocp"
 
 zone: "{{ lookup('env','LOCATION') }}"
 tenantid: "{{ lookup('env','TENANTID') }}"
