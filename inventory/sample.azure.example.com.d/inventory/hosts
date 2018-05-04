@@ -87,39 +87,23 @@ masters
 nodes
 etcd
 
-[masters:children]
-group_masters_azure
-
-[masters:vars]
-openshift_node_labels="{'region': 'primary',  'zone': 'default'}"
-openshift_schedulable=True
+[masters]
+dev1-ocp-master-1 openshift_node_labels="{'region': 'primary',  'zone': 'default'}" openshift_schedulable=True
+dev1-ocp-master-2 openshift_node_labels="{'region': 'primary',  'zone': 'default'}" openshift_schedulable=True
+dev1-ocp-master-3 openshift_node_labels="{'region': 'primary',  'zone': 'default'}" openshift_schedulable=True
 
 [etcd]
 dev1-ocp-master-1
 dev1-ocp-master-2
 dev1-ocp-master-3
 
-[nodes:children]
-masters
-group_infra_nodes_azure
-group_app_nodes_azure
-
-[infra_hosts:children]
-group_infra_nodes_azure
-
-[infra_hosts:vars]
-openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-openshift_schedulable=True
-
-[app_hosts:children]
-group_app_nodes_azure
-
-[app_hosts:vars]
-openshift_node_labels="{'region': 'app',  'zone': 'default'}"
-openshift_schedulable=True
+[nodes]
+dev1-ocp-master-1
+dev1-ocp-master-2
+dev1-ocp-master-3
+dev1-ocp-infra-1 openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_schedulable=True
+dev1-ocp-infra-2 openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_schedulable=True
+dev1-ocp-app-1 openshift_node_labels="{'region': 'app', 'zone': 'default'}" openshift_schedulable=True
+dev1-ocp-app-2 openshift_node_labels="{'region': 'app', 'zone': 'default'}" openshift_schedulable=True
 
 [glusterfs]
-
-[group_masters_azure]
-[group_infra_nodes_azure]
-[group_app_nodes_azure]
