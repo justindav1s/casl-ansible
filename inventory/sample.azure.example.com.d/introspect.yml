@@ -12,7 +12,7 @@
   - debug:
       var: result.stdout
 
-- name: Get facts for dev1-master-lb-publicip
-  azure_rm_publicip_facts:
-    resource_group: rg-beta-ocp
-    name: dev1-master-lb-publicip
+  - name: Get facts for dev1-master-lb-publicip
+    azure_rm_publicip_facts:
+      resource_group: rg-beta-ocp
+      name: dev1-master-lb-publicip
