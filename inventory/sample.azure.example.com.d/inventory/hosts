@@ -16,9 +16,9 @@ docker_udev_workaround=True
 openshift_use_dnsmasq=true
 
 # Addresses for connecting to the OpenShift master nodes
-openshift_master_cluster_hostname=ocp.52.232.123.166.nip.io
+openshift_master_cluster_hostname=ocp.52.174.58.245.nip.io
 openshift_master_cluster_public_hostname="{{ openshift_master_cluster_hostname }}"
-openshift_master_default_subdomain="apps.52.232.31.162.nip.io"
+openshift_master_default_subdomain="apps.52.166.130.226.nip.io"
 
 openshift_override_hostname_check=true
 osm_use_cockpit=false
@@ -61,8 +61,8 @@ openshift_logging_fluentd_nodeselector={"logging":"true"}
 openshift_logging_es_nodeselector={"region":"infra"}
 openshift_logging_kibana_nodeselector={"region":"infra"}
 openshift_logging_curator_nodeselector={"region":"infra"}
-openshift_master_logging_public_url="https://kibana.apps.52.232.31.162.nip.io"
-openshift_logging_master_public_url=https://ocp.52.232.123.166.nip.io:443
+openshift_master_logging_public_url="https://kibana.apps.52.166.130.226.nip.io"
+openshift_logging_master_public_url=https://ocp.52.174.58.245.nip.io:443
 
 
 # Configure node kubelet arguments. pods-per-core is valid in OpenShift Origin 1.3 or OpenShift Container Platform 3.3 and later.
