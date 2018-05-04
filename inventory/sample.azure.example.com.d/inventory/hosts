@@ -83,9 +83,9 @@ openshift_prometheus_storage_kind=dynamic
 OSEv3
 
 [OSEv3:children]
-group_masters_azure
-group_app_nodes_azure
-group_infra_nodes_azure
+masters
+nodes
+etcd
 
 [masters:children]
 group_masters_azure
