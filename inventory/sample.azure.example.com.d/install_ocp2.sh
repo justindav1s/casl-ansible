@@ -10,6 +10,6 @@ DEBUG=
 
 ansible-playbook $DEBUG \
     -f 20 \
-    -i inventory \
+    -i inventory/hosts \
     /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml \
     -e@./inventory/group_vars/all.yml
