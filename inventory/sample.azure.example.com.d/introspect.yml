@@ -10,7 +10,6 @@
     register: result
   - debug:
       var: result.stdout
-  - name: "Get facts for dev1-master-lb-publicip"
-    azure_rm_publicipaddress_facts:
-      resource_group: rg-beta-ocp
-      name: dev1-master-lb-publicip
+  - name: "Get facts for rg-beta-ocp"
+    azure_rm_resourcegroup_facts:
+      name: rg-beta-ocp
