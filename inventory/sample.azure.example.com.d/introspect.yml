@@ -3,7 +3,7 @@
   remote_user: "{{ admin_user }}"
   become: yes
   become_method: sudo
-  gather_facts: yes
+  gather_facts: no
   tasks:
   - name: Uname
     command: "uname -a"
@@ -12,5 +12,7 @@
   - debug:
       var: result.stdout
 
-  - debug:
-      var: hostvars
+- name: Get facts for dev1-master-lb-publicip
+  azure_rm_publicip_facts:
+    resource_group: rg-beta-ocp
+    name: dev1-master-lb-publicip
