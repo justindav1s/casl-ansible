@@ -19,6 +19,7 @@ openshift_use_dnsmasq=true
 openshift_master_cluster_hostname=ocp.52.174.58.245.nip.io
 openshift_master_cluster_public_hostname=ocp.52.174.58.245.nip.io
 openshift_master_default_subdomain=apps.52.166.130.226.nip.io
+openshift_master_cluster_public_vip=52.174.58.245
 
 openshift_override_hostname_check=true
 osm_use_cockpit=false
