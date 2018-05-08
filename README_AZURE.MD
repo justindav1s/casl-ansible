@@ -33,5 +33,7 @@ This will be the case until we get private config management. Ensure that all th
       
 Actions
 1. Automate injection of LB IP addresses (until we get DNS)
-2.       
-           
+     
+
+Logging cert fix           
+   * https://github.com/openshift/openshift-ansible/issues/7725
